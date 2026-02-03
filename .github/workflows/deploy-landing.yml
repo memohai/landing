@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'docs/**'
+      - './'
       - '.github/workflows/deploy-landing.yml'
   workflow_dispatch:
 
