@@ -54,13 +54,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
       
-      - name: Build with VitePress
-        run: pnpm --filter @memoh/docs build
+      - name: Build with Vite
+        run: pnpm build
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/docs/.vitepress/dist
+          publish_dir: ./dist
           cname: memoh.ai
 
