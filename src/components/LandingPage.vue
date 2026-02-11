@@ -175,7 +175,7 @@ onUnmounted(() => {
             <a href="https://docs.memoh.ai" target="_blank" class="hover:text-gray-900 transition-colors flex items-center gap-1.5">
               <font-awesome-icon icon="book" /> Docs
             </a>
-            <a href="#" class="hover:text-gray-900 transition-colors flex items-center gap-1.5">
+            <a href="https://t.me/memohai" class="hover:text-gray-900 transition-colors flex items-center gap-1.5">
               <font-awesome-icon :icon="['fab', 'telegram']" /> Telegram
             </a>
           </div>
