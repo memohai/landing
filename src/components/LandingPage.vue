@@ -80,9 +80,7 @@ const platforms = [
 ]
 
 const commands = {
-  docker: `git clone https://github.com/memohai/Memoh.git
-cd Memoh
-./deploy.sh`,
+  docker: `curl -fsSL https://raw.githubusercontent.com/memohai/Memoh/main/scripts/install.sh | sh`,
   source: `git clone https://github.com/memohai/Memoh.git
 cd Memoh
 mise install
@@ -276,7 +274,7 @@ onUnmounted(() => {
 
     <!-- ==================== Quick Start ==================== -->
     <section id="quick-start" class="py-20 bg-white">
-      <div class="container mx-auto px-4 max-w-3xl">
+      <div class="container mx-auto px-4 max-w-4xl">
         <div class="text-center mb-10 scroll-animate">
           <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
             Quick Start
@@ -308,7 +306,7 @@ onUnmounted(() => {
               </button>
             </div>
           </div>
-          <div class="p-6 bg-[#1a1b26] group relative min-h-[140px]">
+          <div class="p-9 bg-[#1a1b26] group relative min-h-[100px]">
             <transition name="fade" mode="out-in">
                <pre :key="activeTab" class="font-mono text-sm text-gray-300 overflow-x-auto whitespace-pre leading-relaxed">{{ commands[activeTab as keyof typeof commands] }}</pre>
             </transition>
