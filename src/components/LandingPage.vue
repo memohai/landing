@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faGithub, faTelegram, faDiscord } from '@fortawesome/free-brands-svg-icons'
+import { faGithub, faTelegram, faDiscord, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import {
   faBook, faCopy, faCheck, faUsers, faBrain, faBox,
   faRobot, faComments, faClock, faSliders, faShieldHalved,
@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
-  faGithub, faTelegram, faDiscord,
+  faGithub, faTelegram, faDiscord, faXTwitter,
   faBook, faCopy, faCheck, faUsers, faBrain, faBox,
   faRobot, faComments, faClock, faSliders, faShieldHalved,
   faArrowRight, faStar, faCodeBranch, faHeart,
@@ -175,6 +175,9 @@ onUnmounted(() => {
             </a>
             <a href="https://t.me/memohai" class="hover:text-gray-900 transition-colors flex items-center gap-1.5">
               <font-awesome-icon :icon="['fab', 'telegram']" /> Telegram
+            </a>
+            <a href="https://x.com/memoh_ai" target="_blank" class="hover:text-gray-900 transition-colors flex items-center gap-1.5">
+              <font-awesome-icon :icon="['fab', 'x-twitter']" /> Twitter
             </a>
           </div>
         </div>
