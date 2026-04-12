@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { useDark, useToggle } from '@vueuse/core'
+import { Moon, Sun } from 'lucide-vue-next'
 import HeroSection from './components/HeroSection.vue'
+import InstallModule from './components/InstallModule.vue'
 
-// (App 级别的其他状态如果需要保留，可以放在这里)
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>
@@ -12,17 +16,29 @@ import HeroSection from './components/HeroSection.vue'
       <!-- Navigation -->
       <!-- Flat Atom: no shadow, rely on border-border -->
       <header class="sticky top-0 z-50 w-full backdrop-blur flex justify-center border-b bg-background/80 border-border shadow-none">
-        <div class="max-w-[1080px] w-full h-14 px-4 md:px-8 flex items-center justify-between overflow-x-auto">
-          <div class="flex items-center gap-4 sm:gap-6 md:gap-10 w-full">
+        <div class="max-w-[1080px] w-full h-14 px-4 md:px-8 flex items-center justify-between">
+          <div class="flex items-center gap-4 sm:gap-6 md:gap-10 overflow-hidden w-full">
             <a href="#" class="flex items-center shrink-0">
               <span class="font-bold text-lg tracking-tight text-foreground">Memoh</span>
             </a>
+            <!-- Monochrome Hover & a11y First. Adjusted gap and padding for perfect alignment -->
+            <!-- We apply overflow-x-auto ONLY to the nav to allow scrolling on small screens without pushing the theme toggle away -->
             <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto w-full no-scrollbar">
-              <!-- Monochrome Hover & a11y First. Adjusted gap and padding for perfect alignment -->
               <a href="#" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Docs</a>
               <a href="#" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">GitHub</a>
               <a href="#" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Supermarket</a>
             </nav>
+          </div>
+          
+          <!-- Theme Toggle Button -->
+          <!-- shrink-0 prevents the button from squishing, flex-none also helps -->
+          <div class="flex items-center ml-2 sm:ml-4 shrink-0 flex-none">
+            <button @click="toggleDark()" 
+                    class="flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent hover:bg-accent text-muted-foreground hover:text-foreground active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none border border-transparent hover:border-border" 
+                    aria-label="Toggle theme">
+              <Sun v-if="isDark" class="w-4 h-4 shrink-0" />
+              <Moon v-else class="w-4 h-4 shrink-0" />
+            </button>
           </div>
         </div>
       </header>
@@ -31,32 +47,9 @@ import HeroSection from './components/HeroSection.vue'
       <HeroSection />
       <!-- ==================================== -->
 
-      <!-- Module 2: The Terminal / Developer Experience -->
-      <section class="max-w-[1080px] w-full py-[80px] flex flex-col items-center gap-10 px-4 md:px-8 border-b border-border">
-        <div class="flex flex-col items-center gap-4 text-center max-w-[700px]">
-          <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-foreground">Deploy in seconds. Own forever.</h2>
-          <p class="text-sm md:text-base leading-relaxed text-muted-foreground">
-            Spin up a containerized AI agent locally or in the cloud. Full control over memory, tools, and connected channels with zero telemetry.
-          </p>
-        </div>
-        
-        <!-- Terminal Mockup (Flat Atom) -->
-        <div class="max-w-[800px] w-full border border-border rounded-md bg-background shadow-none overflow-hidden flex flex-col">
-          <div class="flex items-center px-4 h-12 border-b border-border bg-muted/30">
-            <span class="font-mono text-xs text-muted-foreground">~/memoh</span>
-          </div>
-          <div class="p-6 font-mono text-sm leading-relaxed text-foreground bg-background overflow-x-auto">
-            <div class="text-muted-foreground">$ docker-compose up -d</div>
-            <div><span class="text-muted-foreground">[+]</span> Running 3/3</div>
-            <div><span class="text-muted-foreground"> ✔</span> Container memoh-db      <span class="text-muted-foreground">Started</span></div>
-            <div><span class="text-muted-foreground"> ✔</span> Container memoh-core    <span class="text-muted-foreground">Started</span></div>
-            <div><span class="text-muted-foreground"> ✔</span> Container memoh-agents  <span class="text-muted-foreground">Started</span></div>
-            <div class="mt-4 text-muted-foreground">$ memoh agent create --name "nexus-01" --channels "telegram,slack"</div>
-            <div><span class="text-foreground font-semibold">SUCCESS:</span> Agent nexus-01 initialized. Omnichannel listeners active.</div>
-            <div class="mt-4"><span class="animate-pulse">█</span></div>
-          </div>
-        </div>
-      </section>
+      <!-- ====== 新的一键安装模块 ====== -->
+      <InstallModule />
+      <!-- ==================================== -->
 
       <!-- Module 3: The Virtual Computer Architecture -->
       <section class="max-w-[1080px] w-full py-[80px] flex flex-col items-center gap-10 px-4 md:px-8 border-b border-border">

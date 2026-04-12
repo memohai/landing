@@ -35,6 +35,20 @@
     --destructive-foreground: #ffffff;
     --ring: #09090b;
   }
+  .dark {
+    --background: #09090b;
+    --foreground: #fafafa;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --primary: #7c3aed;
+    --primary-foreground: #ffffff;
+    --accent: #27272a;
+    --accent-foreground: #fafafa;
+    --border: #27272a;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #fafafa;
+    --ring: #d4d4d8;
+  }
 }
 
 @layer base {

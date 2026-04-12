@@ -157,13 +157,8 @@ const skipAnimation = () => {
               </div>
             </div>
           </div>
-
-          <!-- Static Fallback -->
-          <div v-if="isSkipped" class="absolute inset-0 pointer-events-none opacity-40">
-             <div class="absolute top-1/2 left-1/2 -ml-[75px] -mt-[24px] translate-x-[-220px] translate-y-[120px] scale-75 blur-[1px]">
-               <div class="flex items-center gap-3 p-3 rounded-[10px] bg-background border border-border w-[150px] shadow-sm"><div class="w-6 h-6 rounded-md bg-muted shrink-0 flex items-center justify-center"></div><div class="flex flex-col gap-1.5"><div class="w-12 h-2 bg-muted rounded-full"></div><div class="w-20 h-2 bg-muted/60 rounded-full"></div></div></div>
-             </div>
-          </div>
+          
+          <!-- REMOVED STATIC FALLBACK HERE -->
         </div>
 
         <!-- Typography 紧跟在 Logo 下方 -->
