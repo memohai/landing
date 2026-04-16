@@ -3,6 +3,7 @@ import { useDark, useToggle } from '@vueuse/core'
 import { Moon, Sun } from 'lucide-vue-next'
 import HeroSection from './components/HeroSection.vue'
 import InstallModule from './components/InstallModule.vue'
+import UseCasesGrid from './components/UseCasesGrid.vue'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -18,15 +19,15 @@ const toggleDark = useToggle(isDark)
       <header class="sticky top-0 z-50 w-full backdrop-blur flex justify-center border-b bg-background/80 border-border shadow-none">
         <div class="max-w-[1080px] w-full h-14 px-4 md:px-8 flex items-center justify-between">
           <div class="flex items-center gap-4 sm:gap-6 md:gap-10 overflow-hidden w-full">
-            <a href="#" class="flex items-center shrink-0">
+            <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="flex items-center shrink-0">
               <span class="font-bold text-lg tracking-tight text-foreground">Memoh</span>
             </a>
             <!-- Monochrome Hover & a11y First. Adjusted gap and padding for perfect alignment -->
             <!-- We apply overflow-x-auto ONLY to the nav to allow scrolling on small screens without pushing the theme toggle away -->
             <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto w-full no-scrollbar">
-              <a href="#" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Docs</a>
-              <a href="#" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">GitHub</a>
-              <a href="#" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Supermarket</a>
+              <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Docs</a>
+              <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">GitHub</a>
+              <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Supermarket</a>
             </nav>
           </div>
           
@@ -49,6 +50,10 @@ const toggleDark = useToggle(isDark)
 
       <!-- ====== 新的一键安装模块 ====== -->
       <InstallModule />
+      <!-- ==================================== -->
+
+      <!-- ====== 核心应用场景网格 ====== -->
+      <UseCasesGrid />
       <!-- ==================================== -->
 
       <!-- Module 3: The Virtual Computer Architecture -->
@@ -108,21 +113,21 @@ const toggleDark = useToggle(isDark)
         </h2>
         <div class="flex flex-col border border-border rounded-md bg-background overflow-hidden shadow-none">
           <!-- Row 1 -->
-          <a href="#" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
+          <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
             <div class="flex items-center gap-4">
               <span class="font-medium text-sm text-foreground">Memoh / Supermarket</span>
             </div>
             <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">Official Skill & MCP Registry &rarr;</span>
           </a>
           <!-- Row 2 -->
-          <a href="#" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
+          <a href="https://github.com/memohai/twilight-ai" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
             <div class="flex items-center gap-4">
               <span class="font-medium text-sm text-foreground">Memoh / twilight-ai</span>
             </div>
             <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">Lightweight AI SDK for Go &rarr;</span>
           </a>
           <!-- Row 3 -->
-          <a href="#" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
+          <a href="https://github.com/memohai/Autofish" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
             <div class="flex items-center gap-4">
               <span class="font-medium text-sm text-foreground">Memoh / Autofish</span>
             </div>
@@ -135,8 +140,8 @@ const toggleDark = useToggle(isDark)
       <footer class="w-full max-w-[1080px] py-[60px] border-t flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-8 border-border">
         <span class="text-sm text-muted-foreground">© 2026 MemohAI. Open Source.</span>
         <div class="flex gap-6">
-          <a href="#" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
-          <a href="#" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</a>
+          <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
+          <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</a>
         </div>
       </footer>
 

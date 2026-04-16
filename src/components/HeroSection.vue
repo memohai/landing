@@ -171,9 +171,9 @@ const skipAnimation = () => {
             Self-hosted, highly concurrent, zero telemetry. Built for the modern enterprise.
           </p>
           <!-- A11Y FIRST & PURPLE SCARCITY: Primary CTA is the ONLY purple. Flat atom -> shadow-none. -->
-          <button class="bg-primary hover:bg-primary/90 text-primary-foreground active:scale-95 px-8 py-3 rounded-md font-medium shadow-none transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-2">
+          <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="inline-block bg-primary hover:bg-primary/90 text-primary-foreground active:scale-95 px-8 py-3 rounded-md font-medium shadow-none transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-2">
             Get Started
-          </button>
+          </a>
         </div>
 
       </div>
