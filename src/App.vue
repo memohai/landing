@@ -1,12 +1,86 @@
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
-import { Moon, Sun } from 'lucide-vue-next'
+import { ref, computed } from 'vue'
+import { useDark, useToggle, onClickOutside } from '@vueuse/core'
+import { Moon, Sun, Store, Code2, Smartphone, Languages, ChevronDown, Menu, X } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
+import { useHead, useSeoMeta } from '@unhead/vue'
 import HeroSection from './components/HeroSection.vue'
 import InstallModule from './components/InstallModule.vue'
 import UseCasesGrid from './components/UseCasesGrid.vue'
+import FeatureGallery from './components/FeatureGallery.vue'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+const { locale, t } = useI18n()
+
+// SEO Meta Management
+useSeoMeta({
+  title: () => t('seo.title'),
+  description: () => t('seo.description'),
+  ogTitle: () => t('seo.title'),
+  ogDescription: () => t('seo.description'),
+  ogType: 'website',
+  ogUrl: 'https://memoh.ai',
+  ogImage: 'https://memoh.ai/hero.png',
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => t('seo.title'),
+  twitterDescription: () => t('seo.description'),
+})
+
+// Additional Head Management
+useHead({
+  htmlAttrs: {
+    lang: computed(() => locale.value),
+  },
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://memoh.ai',
+    },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: computed(() => JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        'name': 'MemohAI',
+        'operatingSystem': 'Linux, Docker',
+        'applicationCategory': 'BusinessApplication, DeveloperApplication',
+        'offers': {
+          '@type': 'Offer',
+          'price': '0',
+          'priceCurrency': 'USD'
+        },
+        'description': t('seo.description'),
+        'author': {
+          '@type': 'Organization',
+          'name': 'MemohAI'
+        }
+      })),
+    },
+  ],
+})
+
+const isLangOpen = ref(false)
+const langMenuRef = ref<HTMLElement | null>(null)
+
+onClickOutside(langMenuRef, () => {
+  isLangOpen.value = false
+})
+
+const isMobileMenuOpen = ref(false)
+
+const toggleLangMenu = () => {
+  isLangOpen.value = !isLangOpen.value
+}
+
+const selectLang = (lang: string) => {
+  locale.value = lang
+  localStorage.setItem('memoh-lang', lang)
+  isLangOpen.value = false
+}
 </script>
 
 <template>
@@ -15,133 +89,150 @@ const toggleDark = useToggle(isDark)
     <div class="w-full flex flex-col items-center">
       
       <!-- Navigation -->
-      <!-- Flat Atom: no shadow, rely on border-border -->
       <header class="sticky top-0 z-50 w-full backdrop-blur flex justify-center border-b bg-background/80 border-border shadow-none">
         <div class="max-w-[1080px] w-full h-14 px-4 md:px-8 flex items-center justify-between">
-          <div class="flex items-center gap-4 sm:gap-6 md:gap-10 overflow-hidden w-full">
-            <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="flex items-center shrink-0">
+          <div class="flex items-center gap-4 sm:gap-6 md:gap-10 overflow-hidden">
+            <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="flex items-center shrink-0 gap-2">
+              <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain" />
               <span class="font-bold text-lg tracking-tight text-foreground">Memoh</span>
             </a>
-            <!-- Monochrome Hover & a11y First. Adjusted gap and padding for perfect alignment -->
-            <!-- We apply overflow-x-auto ONLY to the nav to allow scrolling on small screens without pushing the theme toggle away -->
-            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto w-full no-scrollbar">
-              <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Docs</a>
-              <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">GitHub</a>
-              <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">Supermarket</a>
+            <nav class="hidden md:flex items-center gap-1 sm:gap-2">
+              <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">{{ $t('nav.docs') }}</a>
+              <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">{{ $t('nav.github') }}</a>
+              <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap">{{ $t('nav.supermarket') }}</a>
             </nav>
           </div>
           
-          <!-- Theme Toggle Button -->
-          <!-- shrink-0 prevents the button from squishing, flex-none also helps -->
-          <div class="flex items-center ml-2 sm:ml-4 shrink-0 flex-none">
+          <div class="flex items-center ml-2 sm:ml-4 shrink-0 gap-2">
+            <!-- Language Switcher -->
+            <div class="relative flex items-center" ref="langMenuRef">
+              <button @click="toggleLangMenu" 
+                      class="flex items-center justify-center gap-1.5 px-2 h-9 rounded-md bg-transparent hover:bg-accent text-muted-foreground hover:text-foreground active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none border border-transparent hover:border-border" 
+                      aria-label="Select language">
+                <Languages class="w-4 h-4 shrink-0" />
+                <span class="text-[10px] font-bold tracking-tighter">{{ locale === 'zh' ? 'ZH' : 'EN' }}</span>
+                <ChevronDown class="w-3 h-3 shrink-0 opacity-50 transition-transform duration-200" :class="{ 'rotate-180': isLangOpen }" />
+              </button>
+              
+              <Transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
+              >
+                <div v-if="isLangOpen" 
+                     class="absolute top-full right-0 mt-1.5 w-32 rounded-md border border-border bg-background shadow-lg z-50 overflow-hidden py-1">
+                  <button @click="selectLang('en')"
+                          class="flex items-center justify-between w-full px-3 py-2 text-sm hover:bg-accent transition-colors text-left"
+                          :class="{ 'text-foreground bg-accent/50': locale === 'en', 'text-muted-foreground': locale !== 'en' }">
+                    <span>English</span>
+                    <span class="text-[10px] font-bold border border-current rounded px-1 scale-90">EN</span>
+                  </button>
+                  <button @click="selectLang('zh')"
+                          class="flex items-center justify-between w-full px-3 py-2 text-sm hover:bg-accent transition-colors text-left"
+                          :class="{ 'text-foreground bg-accent/50': locale === 'zh', 'text-muted-foreground': locale !== 'zh' }">
+                    <span>中文</span>
+                    <span class="text-[10px] font-bold border border-current rounded px-1 scale-90">ZH</span>
+                  </button>
+                </div>
+              </Transition>
+            </div>
+<!-- Theme Toggle Button -->
             <button @click="toggleDark()" 
                     class="flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent hover:bg-accent text-muted-foreground hover:text-foreground active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none border border-transparent hover:border-border" 
                     aria-label="Toggle theme">
               <Sun v-if="isDark" class="w-4 h-4 shrink-0" />
               <Moon v-else class="w-4 h-4 shrink-0" />
             </button>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button @click="isMobileMenuOpen = !isMobileMenuOpen" 
+                    class="md:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent hover:bg-accent text-muted-foreground hover:text-foreground active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none border border-transparent hover:border-border" 
+                    aria-label="Toggle mobile menu">
+              <Menu v-if="!isMobileMenuOpen" class="w-4 h-4 shrink-0" />
+              <X v-else class="w-4 h-4 shrink-0" />
+            </button>
           </div>
         </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <Transition
+          enter-active-class="transition duration-200 ease-out"
+          enter-from-class="transform -translate-y-2 opacity-0"
+          enter-to-class="transform translate-y-0 opacity-100"
+          leave-active-class="transition duration-150 ease-in"
+          leave-from-class="transform translate-y-0 opacity-100"
+          leave-to-class="transform -translate-y-2 opacity-0"
+        >
+          <div v-if="isMobileMenuOpen" class="md:hidden absolute top-[57px] left-0 w-full border-b border-border bg-background/95 backdrop-blur z-40 px-4 py-4 flex flex-col gap-2 shadow-sm">
+            <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" @click="isMobileMenuOpen = false">{{ $t('nav.docs') }}</a>
+            <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" @click="isMobileMenuOpen = false">{{ $t('nav.github') }}</a>
+            <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" @click="isMobileMenuOpen = false">{{ $t('nav.supermarket') }}</a>
+          </div>
+        </Transition>
       </header>
 
-      <!-- ====== 动态收敛的首屏动效模块 ====== -->
+      <!-- Hero section with landing animation -->
       <HeroSection />
       <!-- ==================================== -->
 
-      <!-- ====== 新的一键安装模块 ====== -->
+      <!-- One-click installation module -->
       <InstallModule />
       <!-- ==================================== -->
 
-      <!-- ====== 核心应用场景网格 ====== -->
+      <!-- Core use cases grid -->
       <UseCasesGrid />
       <!-- ==================================== -->
 
-      <!-- Module 3: The Virtual Computer Architecture -->
-      <section class="max-w-[1080px] w-full py-[80px] flex flex-col items-center gap-10 px-4 md:px-8 border-b border-border">
-        <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-center text-foreground">
-          The Virtual Computer Architecture
-        </h2>
-        <!-- Flat Atom: no shadow on the grid container -->
-        <div class="w-full grid grid-cols-1 md:grid-cols-3 border border-border rounded-md overflow-hidden bg-background shadow-none">
-          
-          <div class="flex flex-col p-8 md:p-10 gap-6 border-b md:border-b-0 md:border-r border-border">
-            <div class="w-10 h-10 rounded-md border border-border bg-muted flex items-center justify-center text-foreground">
-              <!-- Icon -->
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-            </div>
-            <div>
-              <h3 class="font-medium text-base mb-2 text-foreground">Containerized Isolation</h3>
-              <p class="text-sm leading-relaxed text-muted-foreground">
-                Every bot runs in its own 'virtual computer' via containerd. Isolated filesystems and networks ensure the host is safe even if a tool fails.
-              </p>
-            </div>
-          </div>
-          
-          <div class="flex flex-col p-8 md:p-10 gap-6 border-b md:border-b-0 md:border-r border-border">
-            <div class="w-10 h-10 rounded-md border border-border bg-muted flex items-center justify-center text-foreground">
-              <!-- Icon -->
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-            </div>
-            <div>
-              <h3 class="font-medium text-base mb-2 text-foreground">Advanced Memory</h3>
-              <p class="text-sm leading-relaxed text-muted-foreground">
-                Pluggable hybrid retrieval (Dense + Sparse + BM25) paired with LLM-driven fact extraction. Bots maintain autonomous long-term recall.
-              </p>
-            </div>
-          </div>
-
-          <div class="flex flex-col p-8 md:p-10 gap-6">
-            <div class="w-10 h-10 rounded-md border border-border bg-muted flex items-center justify-center text-foreground">
-              <!-- Icon -->
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-            </div>
-            <div>
-              <h3 class="font-medium text-base mb-2 text-foreground">Omnichannel Native</h3>
-              <p class="text-sm leading-relaxed text-muted-foreground">
-                First-class support for Telegram, Discord, Lark, WeChat, Matrix, and Email. Deploy your agent logic once and interact anywhere.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </section>
+      <!-- Module 3: Gallery replacing Architecture -->
+      <FeatureGallery />
 
       <!-- Module 4: Memoh Ecosystem -->
       <section class="max-w-[800px] w-full py-[80px] flex flex-col gap-8 px-4 md:px-8">
         <h2 class="font-semibold text-xl md:text-2xl tracking-tight text-foreground">
-          Ecosystem & SDKs
+          {{ $t('ecosystem.title') }}
         </h2>
         <div class="flex flex-col border border-border rounded-md bg-background overflow-hidden shadow-none">
           <!-- Row 1 -->
           <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
             <div class="flex items-center gap-4">
-              <span class="font-medium text-sm text-foreground">Memoh / Supermarket</span>
+              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0">
+                <Store :size="16" :stroke-width="2" />
+              </div>
+              <span class="font-medium text-sm text-foreground">{{ $t('ecosystem.e1.title') }}</span>
             </div>
-            <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">Official Skill & MCP Registry &rarr;</span>
+            <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">{{ $t('ecosystem.e1.desc') }}</span>
           </a>
           <!-- Row 2 -->
           <a href="https://github.com/memohai/twilight-ai" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
             <div class="flex items-center gap-4">
-              <span class="font-medium text-sm text-foreground">Memoh / twilight-ai</span>
+              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0">
+                <Code2 :size="16" :stroke-width="2" />
+              </div>
+              <span class="font-medium text-sm text-foreground">{{ $t('ecosystem.e2.title') }}</span>
             </div>
-            <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">Lightweight AI SDK for Go &rarr;</span>
+            <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">{{ $t('ecosystem.e2.desc') }}</span>
           </a>
           <!-- Row 3 -->
           <a href="https://github.com/memohai/Autofish" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
             <div class="flex items-center gap-4">
-              <span class="font-medium text-sm text-foreground">Memoh / Autofish</span>
+              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0">
+                <Smartphone :size="16" :stroke-width="2" />
+              </div>
+              <span class="font-medium text-sm text-foreground">{{ $t('ecosystem.e3.title') }}</span>
             </div>
-            <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">Android Device Automation Agent &rarr;</span>
-          </a>
-        </div>
+            <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">{{ $t('ecosystem.e3.desc') }}</span>
+          </a>        </div>
       </section>
 
       <!-- Footer -->
       <footer class="w-full max-w-[1080px] py-[60px] border-t flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-8 border-border">
-        <span class="text-sm text-muted-foreground">© 2026 MemohAI. Open Source.</span>
+        <span class="text-sm text-muted-foreground">{{ $t('footer.copyright') }}</span>
         <div class="flex gap-6">
-          <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
-          <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</a>
+          <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ $t('footer.privacy') }}</a>
+          <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ $t('footer.terms') }}</a>
         </div>
       </footer>
 

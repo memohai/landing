@@ -1,84 +1,99 @@
 <script setup lang="ts">
-const cases = [
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { 
+  Users, Box, Brain, MessageSquare, Wrench, Globe, 
+  Theater, MessagesSquare, Clock, LayoutDashboard, 
+  ShieldCheck, FlaskConical, Rocket 
+} from 'lucide-vue-next'
+
+const { t } = useI18n()
+
+const sections = computed(() => [
   {
-    id: 1,
-    title: '24/7 Always-on Assistant',
-    description: 'Deploys across Telegram, Discord, and WeChat seamlessly. Your agent maintains perfect conversational context across all devices, acting as a true digital twin.',
-    size: 'md:col-span-2 md:row-span-2',
-    icon: `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>`,
-    tech: ['Go', 'WebSockets', 'Matrix Protocol']
+    id: 'core',
+    title: t('usecases.sections.core'),
+    items: [
+      { id: 1, key: 'f1', icon: Users, size: 'md:col-span-2', soul: true },
+      { id: 2, key: 'f2', icon: Box, size: 'md:col-span-1' },
+      { id: 4, key: 'f4', icon: MessageSquare, size: 'md:col-span-1' },
+      { id: 3, key: 'f3', icon: Brain, size: 'md:col-span-2', soul: true },
+    ]
   },
   {
-    id: 2,
-    title: 'Autonomous Web Researcher',
-    description: 'Schedule cron jobs to scrape sites, fill forms, and synthesize reports automatically. Powered by headless browser automation running securely inside the container.',
-    size: 'md:col-span-2 md:row-span-1',
-    icon: `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>`,
-    tech: ['Playwright', 'Cron', 'Puppeteer']
+    id: 'agent',
+    title: t('usecases.sections.agent'),
+    items: [
+      { id: 5, key: 'f5', icon: Wrench, size: 'md:col-span-1' },
+      { id: 6, key: 'f6', icon: Globe, size: 'md:col-span-1' },
+      { id: 7, key: 'f7', icon: Theater, size: 'md:col-span-1' },
+      { id: 8, key: 'f8', icon: MessagesSquare, size: 'md:col-span-2' },
+      { id: 9, key: 'f9', icon: Clock, size: 'md:col-span-1' },
+    ]
   },
   {
-    id: 3,
-    title: 'Private Knowledge Gateway',
-    description: 'Feed your private documents to the agent. It uses hybrid search (Dense + Sparse + BM25) to provide precise, hallucination-free answers without exposing your data.',
-    size: 'md:col-span-1 md:row-span-1',
-    icon: `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>`,
-    tech: ['Vector DB', 'BM25', 'RAG']
-  },
-  {
-    id: 4,
-    title: 'Team Orchestrator',
-    description: 'Deploy in group chats. The agent recognizes individuals, maintains strict ACLs, and orchestrates tasks securely among team members.',
-    size: 'md:col-span-1 md:row-span-1',
-    icon: `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>`,
-    tech: ['ACL', 'RBAC', 'Multi-tenant']
+    id: 'mgmt',
+    title: t('usecases.sections.mgmt'),
+    items: [
+      { id: 10, key: 'f10', icon: LayoutDashboard, size: 'md:col-span-2' },
+      { id: 11, key: 'f11', icon: ShieldCheck, size: 'md:col-span-1' },
+      { id: 12, key: 'f12', icon: FlaskConical, size: 'md:col-span-1' },
+      { id: 13, key: 'f13', icon: Rocket, size: 'md:col-span-2' },
+    ]
   }
-]
+])
 </script>
 
 <template>
-  <section class="max-w-[1080px] w-full py-[80px] flex flex-col items-center gap-10 px-4 md:px-8 border-b border-border">
+  <section class="max-w-[1080px] w-full py-[80px] flex flex-col items-center gap-16 px-4 md:px-8 border-b border-border">
     <div class="flex flex-col items-center text-center gap-4">
       <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-foreground">
-        Built for Production Scenarios.
+        {{ t('usecases.title') }}
       </h2>
       <p class="text-sm md:text-base text-muted-foreground max-w-[600px]">
-        From personal assistants to enterprise orchestrators, Memoh provides the isolated environment and memory architecture to run complex agentic workflows.
+        {{ t('usecases.subtitle') }}
       </p>
     </div>
 
-    <!-- Bento Grid (Industrial Minimal) -->
-    <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
-      
-      <div v-for="item in cases" :key="item.id" 
-           :class="[
-             'group relative flex flex-col overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-all duration-300 hover:border-foreground/20 hover:bg-accent/50 cursor-default',
-             item.size
-           ]"
-           tabindex="0">
-        
-        <!-- Icon -->
-        <div class="mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted text-foreground transition-colors group-hover:bg-foreground group-hover:text-background" v-html="item.icon">
-        </div>
-
-        <!-- Content -->
-        <div class="flex flex-col gap-2 relative z-10 flex-grow">
-          <h3 class="font-semibold text-lg text-foreground tracking-tight">{{ item.title }}</h3>
-          <p class="text-sm text-muted-foreground leading-relaxed">{{ item.description }}</p>
-        </div>
-
-        <!-- Tech Badges -->
-        <div class="mt-6 flex gap-2 flex-wrap opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-          <span v-for="tech in item.tech" :key="tech" class="inline-flex items-center rounded-md border border-border bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground/80 font-mono">
-            {{ tech }}
-          </span>
-        </div>
-        
+    <div v-for="section in sections" :key="section.id" class="w-full flex flex-col gap-6">
+      <!-- Section Title -->
+      <div class="flex items-center gap-4">
+        <h3 class="text-xs font-bold uppercase tracking-widest text-muted-foreground/60 whitespace-nowrap">
+          {{ section.title }}
+        </h3>
+        <div class="h-px w-full bg-border/50"></div>
       </div>
 
+      <!-- Bento Grid -->
+      <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-auto">
+        <div v-for="item in section.items" :key="item.id" 
+             :class="[
+               'group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-all duration-300 hover:bg-accent/30 cursor-default shadow-none',
+               item.size
+             ]"
+             tabindex="0">
+          
+          <div class="flex flex-col gap-4">
+            <!-- Icon with Hover Transition to Primary Color -->
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
+              <component :is="item.icon" :size="20" stroke-width="2" />
+            </div>
+
+            <!-- Content -->
+            <div class="flex flex-col gap-2 relative z-10">
+              <h4 class="font-semibold text-base md:text-lg text-foreground tracking-tight">{{ t('usecases.items.' + item.key + '.title') }}</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed">{{ t('usecases.items.' + item.key + '.desc') }}</p>
+            </div>
+          </div>
+          
+          <!-- Subtle corner accent for soul items -->
+          <div v-if="item.soul" class="absolute top-0 right-0 w-16 h-16 bg-primary/5 [mask-image:radial-gradient(circle_at_top_right,white,transparent_70%)] pointer-events-none"></div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-/* Industrial minimalist aesthetics rely on clean lines and subtle transitions */
+/* Grid consistency and hierarchy maintained via Tailwind utility classes */
 </style>
