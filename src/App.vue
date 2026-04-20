@@ -8,6 +8,7 @@ import HeroSection from './components/HeroSection.vue'
 import InstallModule from './components/InstallModule.vue'
 import UseCasesGrid from './components/UseCasesGrid.vue'
 import FeatureGallery from './components/FeatureGallery.vue'
+import BackgroundCanvas from './components/BackgroundCanvas.vue'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -85,12 +86,15 @@ const selectLang = (lang: string) => {
 
 <template>
   <div class="min-h-screen font-sans overflow-x-hidden bg-background text-foreground">
+    <!-- Global subtle glow background -->
+    <BackgroundCanvas />
+    
     <!-- Center the content area -->
     <div class="w-full flex flex-col items-center">
       
       <!-- Navigation -->
-      <header class="sticky top-0 z-50 w-full backdrop-blur flex justify-center border-b bg-background/80 border-border shadow-none">
-        <div class="max-w-[1080px] w-full h-14 px-4 md:px-8 flex items-center justify-between">
+      <header class="sticky top-0 z-50 w-full backdrop-blur flex justify-center bg-background/80 shadow-none">
+        <div class="max-w-[1080px] w-full h-14 px-4 md:px-8 flex items-center justify-between relative after:absolute after:bottom-0 after:left-4 after:right-4 md:after:left-8 md:after:right-8 after:h-px after:bg-border">
           <div class="flex items-center gap-4 sm:gap-6 md:gap-10 overflow-hidden">
             <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="flex items-center shrink-0 gap-2">
               <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain" />
@@ -174,20 +178,25 @@ const selectLang = (lang: string) => {
         </Transition>
       </header>
 
-      <!-- Hero section with landing animation -->
+      <!-- ====== Dynamic hero animation module ====== -->
       <HeroSection />
-      <!-- ==================================== -->
+
+      <div class="w-full max-w-[1080px] px-4 md:px-8 relative"><div class="absolute bottom-0 left-4 right-4 md:left-8 md:right-8 h-px bg-border"></div></div>
 
       <!-- One-click installation module -->
       <InstallModule />
-      <!-- ==================================== -->
+
+      <div class="w-full max-w-[1080px] px-4 md:px-8 relative"><div class="absolute bottom-0 left-4 right-4 md:left-8 md:right-8 h-px bg-border"></div></div>
 
       <!-- Core use cases grid -->
       <UseCasesGrid />
-      <!-- ==================================== -->
+
+      <div class="w-full max-w-[1080px] px-4 md:px-8 relative"><div class="absolute bottom-0 left-4 right-4 md:left-8 md:right-8 h-px bg-border"></div></div>
 
       <!-- Module 3: Gallery replacing Architecture -->
       <FeatureGallery />
+
+      <div class="w-full max-w-[1080px] px-4 md:px-8 relative"><div class="absolute bottom-0 left-4 right-4 md:left-8 md:right-8 h-px bg-border"></div></div>
 
       <!-- Module 4: Memoh Ecosystem -->
       <section class="max-w-[800px] w-full py-[80px] flex flex-col gap-8 px-4 md:px-8">
@@ -228,7 +237,7 @@ const selectLang = (lang: string) => {
       </section>
 
       <!-- Footer -->
-      <footer class="w-full max-w-[1080px] py-[60px] border-t flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-8 border-border">
+      <footer class="w-full max-w-[1080px] py-[60px] relative after:absolute after:top-0 after:left-4 after:right-4 md:after:left-8 md:after:right-8 after:h-px after:bg-border flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-8">
         <span class="text-sm text-muted-foreground">{{ $t('footer.copyright') }}</span>
         <div class="flex gap-6">
           <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ $t('footer.privacy') }}</a>

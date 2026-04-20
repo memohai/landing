@@ -92,7 +92,7 @@ const closeLightbox = () => {
 </script>
 
 <template>
-  <section class="max-w-[1080px] w-full py-[80px] flex flex-col gap-10 px-4 md:px-8 border-b border-border">
+  <section class="max-w-[1080px] w-full py-[80px] flex flex-col gap-10 px-4 md:px-8 relative">
     <!-- Header -->
     <div class="flex flex-col items-center text-center gap-4">
       <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-foreground">
