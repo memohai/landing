@@ -131,7 +131,7 @@ const skipAnimation = () => {
 
 <template>
   <!-- Background: bg-background (Token) -->
-  <section class="relative w-full h-[calc(100vh-64px)] min-h-[600px] bg-background flex flex-col items-center justify-center overflow-hidden shadow-none">
+  <section class="relative w-full h-[calc(100vh-64px)] min-h-[600px] flex flex-col items-center justify-center overflow-hidden shadow-none">
     
     <!-- Subtlest grid background for modern, clean feel, NO gradients. Uses --color-border -->
     <div class="absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-50"></div>

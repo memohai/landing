@@ -85,7 +85,7 @@ const selectLang = (lang: string) => {
 </script>
 
 <template>
-  <div class="min-h-screen font-sans overflow-x-hidden bg-background text-foreground">
+  <div class="min-h-screen font-sans overflow-x-hidden">
     <!-- Global subtle glow background -->
     <BackgroundCanvas />
     
@@ -205,9 +205,9 @@ const selectLang = (lang: string) => {
         </h2>
         <div class="flex flex-col border border-border rounded-md bg-background overflow-hidden shadow-none">
           <!-- Row 1 -->
-          <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
+          <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:bg-primary/5 group">
             <div class="flex items-center gap-4">
-              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0">
+              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0 transition-colors group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20">
                 <Store :size="16" :stroke-width="2" />
               </div>
               <span class="font-medium text-sm text-foreground">{{ $t('ecosystem.e1.title') }}</span>
@@ -215,9 +215,9 @@ const selectLang = (lang: string) => {
             <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">{{ $t('ecosystem.e1.desc') }}</span>
           </a>
           <!-- Row 2 -->
-          <a href="https://github.com/memohai/twilight-ai" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
+          <a href="https://github.com/memohai/twilight-ai" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 border-b border-border hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:bg-primary/5 group">
             <div class="flex items-center gap-4">
-              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0">
+              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0 transition-colors group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20">
                 <Code2 :size="16" :stroke-width="2" />
               </div>
               <span class="font-medium text-sm text-foreground">{{ $t('ecosystem.e2.title') }}</span>
@@ -225,9 +225,9 @@ const selectLang = (lang: string) => {
             <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors mt-2 sm:mt-0">{{ $t('ecosystem.e2.desc') }}</span>
           </a>
           <!-- Row 3 -->
-          <a href="https://github.com/memohai/Autofish" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent group">
+          <a href="https://github.com/memohai/Autofish" target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-6 hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:bg-primary/5 group">
             <div class="flex items-center gap-4">
-              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0">
+              <div class="w-8 h-8 rounded border border-border bg-muted flex items-center justify-center text-foreground shrink-0 transition-colors group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20">
                 <Smartphone :size="16" :stroke-width="2" />
               </div>
               <span class="font-medium text-sm text-foreground">{{ $t('ecosystem.e3.title') }}</span>

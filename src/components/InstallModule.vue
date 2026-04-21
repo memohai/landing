@@ -64,7 +64,7 @@ const copyCommand = async () => {
 </script>
 
 <template>
-  <section ref="targetRef" class="w-full flex flex-col items-center py-[80px] md:py-[120px] px-4 md:px-8 relative bg-background">
+  <section ref="targetRef" class="w-full flex flex-col items-center py-[80px] md:py-[120px] px-4 md:px-8 relative">
     
     <!-- Container with simultaneous reveal effect -->
     <div class="flex flex-col items-center w-full max-w-[700px] transition-all duration-1000 ease-out"

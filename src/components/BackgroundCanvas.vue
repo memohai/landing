@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
-import { useDark, useEventListener, useThrottleFn } from '@vueuse/core'
+import { useDark, useEventListener } from '@vueuse/core'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const isDark = useDark()
@@ -23,8 +23,6 @@ const glowColor = ref('rgba(255, 255, 255, 0)')
 
 const updateColor = () => {
   if (typeof window === 'undefined') return
-  const style = getComputedStyle(document.documentElement)
-  const foreground = style.getPropertyValue('--foreground').trim()
   
   // Convert to rgba and adjust base opacity according to theme
   // Simplified handling: use white glow for dark mode, dark glow for light mode
