@@ -236,6 +236,27 @@ const selectLang = (lang: string) => {
           </a>        </div>
       </section>
 
+      <!-- Secondary CTA -->
+      <section class="max-w-[1080px] w-full pt-[40px] pb-[80px] flex flex-col items-center px-4 md:px-8 relative z-10">
+        <div class="relative w-full p-8 md:p-10 rounded-2xl border border-border bg-background shadow-none hover:shadow-md hover:-translate-y-1 flex flex-col items-center text-center gap-6 overflow-hidden group transition-all duration-300">
+          <!-- Ambient subtle abstract line inside -->
+          <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30 group-hover:opacity-60 transition-opacity duration-700">
+             <svg viewBox="0 0 1080 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-border"><path d="M-100 100 Q 400 50 600 100 T 1200 100" stroke="currentColor" stroke-width="1" fill="none" /></svg>
+          </div>
+          <h2 class="relative z-10 font-bold text-2xl md:text-3xl tracking-tight text-foreground">
+            {{ $t('cta_bottom.title') }}
+          </h2>
+          <div class="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+            <div class="flex items-center px-4 py-3 rounded-md border border-border bg-muted/30 font-mono text-sm text-foreground overflow-x-auto no-scrollbar w-full sm:w-auto">
+              curl -sL https://memoh.sh | bash
+            </div>
+            <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground active:scale-95 px-6 py-3 rounded-md font-medium shadow-none transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shrink-0 w-full sm:w-auto whitespace-nowrap">
+              {{ $t('cta_bottom.btn') }}
+            </a>
+          </div>
+        </div>
+      </section>
+
       <!-- Footer -->
       <footer class="w-full max-w-[1080px] py-[60px] relative after:absolute after:top-0 after:left-4 after:right-4 md:after:left-8 md:after:right-8 after:h-px after:bg-border flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-8">
         <span class="text-sm text-muted-foreground">{{ $t('footer.copyright') }}</span>

@@ -177,16 +177,18 @@ const skipAnimation = () => {
         </div>
 
         <!-- Typography following the Logo -->
-        <div class="flex flex-col items-center gap-6 transition-all duration-700 ease-out text-center px-4 w-full max-w-[800px] mt-8"
-             :class="showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
-          <h1 class="font-bold text-4xl md:text-6xl text-foreground tracking-tight leading-tight">
+        <div class="flex flex-col items-center text-center px-4 w-full max-w-[800px] mt-8">
+          <h1 class="font-bold text-4xl md:text-6xl text-foreground tracking-tight leading-tight transition-all duration-700 ease-out delay-[100ms]"
+              :class="showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
             {{ $t('hero.title') }}
           </h1>
-          <p class="text-muted-foreground text-sm md:text-base max-w-[600px] leading-relaxed">
+          <p class="mt-6 text-muted-foreground text-sm md:text-base max-w-[600px] leading-relaxed transition-all duration-700 ease-out delay-[200ms]"
+             :class="showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
             {{ $t('hero.subtitle') }}
           </p>
           <!-- Button Group -->
-          <div class="flex flex-wrap items-center justify-center gap-4 mt-2">
+          <div class="flex flex-wrap items-center justify-center gap-4 mt-8 transition-all duration-700 ease-out delay-[300ms]"
+               :class="showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
             <!-- GitHub Entrance -->
             <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" 
                class="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 text-background active:scale-95 px-8 py-3 rounded-md font-medium shadow-none transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">

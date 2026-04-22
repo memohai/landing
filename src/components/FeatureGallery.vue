@@ -23,6 +23,7 @@ const tabs: Tab[] = [
 
 const activeTab = ref<Tab>(tabs[0])
 const lightboxOpen = ref(false)
+const imageLoaded = ref<Record<number, boolean>>({})
 
 // Carousel state
 const isAutoPlaying = ref(true)
@@ -131,12 +132,12 @@ const closeLightbox = () => {
       <div class="w-full md:w-2/3 flex flex-col gap-4">
         <Transition
           mode="out-in"
-          enter-active-class="transition duration-300 ease-out"
-          enter-from-class="opacity-0 translate-y-1"
+          enter-active-class="transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+          enter-from-class="opacity-0 translate-y-2"
           enter-to-class="opacity-100 translate-y-0"
-          leave-active-class="transition duration-150 ease-in"
+          leave-active-class="transition-all duration-300 ease-in"
           leave-from-class="opacity-100 translate-y-0"
-          leave-to-class="opacity-0 -translate-y-1"
+          leave-to-class="opacity-0 -translate-y-2"
         >
           <div :key="activeTab.id" class="flex flex-col gap-4">
             <!-- Image Container (Lightbox Trigger) - Fixed aspect ratio & shadows according to Design-new.md -->
@@ -147,11 +148,16 @@ const closeLightbox = () => {
               tabindex="0"
               aria-label="View full size image"
             >
+              <!-- Image Skeleton -->
+              <div v-show="!imageLoaded[activeTab.id]" class="absolute inset-0 m-2 bg-muted/20 animate-pulse rounded-lg"></div>
+              
               <!-- The Image -->
               <img 
                 :src="activeTab.image" 
                 :alt="t('gallery.tabs.' + activeTab.key)" 
-                class="w-full h-full object-contain rounded-lg transition-transform duration-500 group-hover:scale-105"
+                class="w-full h-full object-contain rounded-lg transition-all duration-500 group-hover:scale-105"
+                :class="imageLoaded[activeTab.id] ? 'opacity-100' : 'opacity-0'"
+                @load="imageLoaded[activeTab.id] = true"
                 loading="lazy"
               />
               

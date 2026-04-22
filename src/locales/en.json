@@ -136,6 +136,10 @@
       "desc": "Android Device Automation Agent →"
     }
   },
+  "cta_bottom": {
+    "title": "Experience Memoh now.",
+    "btn": "Start with one command"
+  },
   "footer": {
     "copyright": "© 2026 MemohAI. Open Source",
     "privacy": "Privacy",

@@ -136,6 +136,10 @@
       "desc": "Android 设备自动化操控中枢 →"
     }
   },
+  "cta_bottom": {
+    "title": "立即体验 Memoh",
+    "btn": "一行命令启动"
+  },
   "footer": {
     "copyright": "© 2026 MemohAI. 拥抱开源",
     "privacy": "隐私政策",

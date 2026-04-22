@@ -3,7 +3,8 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { 
   Users, Brain, Wrench, LayoutDashboard, X,
-  Box, MessageSquare, Globe, Theater, MessagesSquare, Clock, ShieldCheck, FlaskConical, Rocket
+  Box, MessageSquare, Globe, Theater, MessagesSquare, Clock, ShieldCheck, FlaskConical, Rocket,
+  ExternalLink
 } from 'lucide-vue-next'
 
 const { t, locale } = useI18n()
@@ -41,10 +42,10 @@ const allSections = computed(() => [
     title: t('usecases.sections.core'),
     icon: Box,
     items: [
-      { key: 'f1', icon: Users },
-      { key: 'f2', icon: Box },
-      { key: 'f3', icon: Brain },
-      { key: 'f4', icon: MessageSquare }
+      { key: 'f1', icon: Users, url: 'https://docs.memoh.ai/getting-started/bot' },
+      { key: 'f2', icon: Box, url: 'https://docs.memoh.ai/getting-started/container' },
+      { key: 'f3', icon: Brain, url: 'https://docs.memoh.ai/getting-started/memory' },
+      { key: 'f4', icon: MessageSquare, url: 'https://docs.memoh.ai/channels/' }
     ]
   },
   {
@@ -52,11 +53,11 @@ const allSections = computed(() => [
     title: t('usecases.sections.agent'),
     icon: Brain,
     items: [
-      { key: 'f5', icon: Wrench },
-      { key: 'f6', icon: Globe },
-      { key: 'f7', icon: Theater },
-      { key: 'f8', icon: MessagesSquare },
-      { key: 'f9', icon: Clock }
+      { key: 'f5', icon: Wrench, url: 'https://docs.memoh.ai/getting-started/mcp' },
+      { key: 'f6', icon: Globe, url: 'https://docs.memoh.ai/getting-started/browser' },
+      { key: 'f7', icon: Theater, url: 'https://docs.memoh.ai/getting-started/skills' },
+      { key: 'f8', icon: MessagesSquare, url: 'https://docs.memoh.ai/getting-started/sessions' },
+      { key: 'f9', icon: Clock, url: 'https://docs.memoh.ai/getting-started/scheduled-tasks' }
     ]
   },
   {
@@ -64,10 +65,10 @@ const allSections = computed(() => [
     title: t('usecases.sections.mgmt'),
     icon: LayoutDashboard,
     items: [
-      { key: 'f10', icon: LayoutDashboard },
-      { key: 'f11', icon: ShieldCheck },
-      { key: 'f12', icon: FlaskConical },
-      { key: 'f13', icon: Rocket }
+      { key: 'f10', icon: LayoutDashboard, url: 'https://docs.memoh.ai/getting-started/sessions.html#in-the-web-ui' },
+      { key: 'f11', icon: ShieldCheck, url: 'https://docs.memoh.ai/getting-started/access-control' },
+      { key: 'f12', icon: FlaskConical, url: 'https://docs.memoh.ai/getting-started/llm-provider' },
+      { key: 'f13', icon: Rocket, url: 'https://docs.memoh.ai/installation/docker' }
     ]
   }
 ])
@@ -76,9 +77,12 @@ const allSections = computed(() => [
 <template>
   <section class="max-w-[1080px] w-full py-[80px] flex flex-col items-center gap-12 px-4 md:px-8 relative">
     <div class="flex flex-col items-center text-center gap-4">
-      <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-foreground">
-        {{ t('usecases.title') }}
-      </h2>
+      <a href="https://docs.memoh.ai/overview/about" target="_blank" rel="noopener noreferrer" class="group/link flex items-center justify-center gap-2 w-fit relative">
+        <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-foreground hover:underline underline-offset-4">
+          {{ t('usecases.title') }}
+        </h2>
+        <ExternalLink class="w-5 h-5 text-muted-foreground hidden md:block opacity-0 group-hover/link:opacity-100 transition-opacity absolute -right-8" />
+      </a>
       <p class="text-sm md:text-base text-muted-foreground max-w-[600px]">
         {{ t('usecases.subtitle') }}
       </p>
@@ -88,7 +92,7 @@ const allSections = computed(() => [
     <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[220px]">
       
       <!-- 1. Hero Card: Omnichannel Native (2x2) -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-8 md:p-10 transition-all duration-300 shadow-none hover:border-foreground/20 md:col-span-2 md:row-span-2 min-h-[300px] md:min-h-0" tabindex="0">
+      <a href="https://docs.memoh.ai/channels/" target="_blank" rel="noopener noreferrer" class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-8 md:p-10 transition-all duration-300 shadow-none hover:border-foreground/20 hover:shadow-sm md:col-span-2 md:row-span-2 min-h-[300px] md:min-h-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         
         <!-- Abstract Topo Art (Low-key SVG) -->
         <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-500">
@@ -111,13 +115,19 @@ const allSections = computed(() => [
           </svg>
         </div>
 
-        <div class="relative z-10 flex flex-col gap-6 h-full justify-between">
-          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
-            <Users :size="24" stroke-width="1.5" />
+        <div class="relative z-10 flex flex-col gap-6 h-full justify-between pointer-events-none">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
+              <Users :size="24" stroke-width="1.5" />
+            </div>
+            <!-- Docs Chip -->
+            <div class="flex items-center gap-1.5 px-2 py-1.5 rounded border border-border bg-muted/30 text-muted-foreground opacity-0 group-hover:opacity-40 transition-all duration-300 shadow-none z-20">
+              <ExternalLink class="w-3.5 h-3.5" />
+            </div>
           </div>
           <div class="flex flex-col gap-6">
             <div class="flex flex-col gap-3">
-              <h3 class="font-semibold text-xl md:text-2xl text-foreground tracking-tight">{{ t('usecases.items.f4.title') }}</h3>
+              <h3 class="font-semibold text-xl md:text-2xl text-foreground tracking-tight group-hover:underline underline-offset-4">{{ t('usecases.items.f4.title') }}</h3>
               <p class="text-base text-muted-foreground leading-relaxed max-w-[400px]">{{ t('usecases.items.f4.desc') }}</p>
             </div>
             
@@ -149,10 +159,10 @@ const allSections = computed(() => [
             
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- 2. Tall Card: Memory Engineering (1x2) -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 md:p-8 transition-all duration-300 shadow-none hover:border-foreground/20 md:col-span-1 md:row-span-2 min-h-[300px] md:min-h-0" tabindex="0">
+      <a href="https://docs.memoh.ai/getting-started/memory" target="_blank" rel="noopener noreferrer" class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 md:p-8 transition-all duration-300 shadow-none hover:border-foreground/20 hover:shadow-sm md:col-span-1 md:row-span-2 min-h-[300px] md:min-h-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         
         <!-- Abstract Stack Art (Low-key SVG) -->
         <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-end justify-center pb-10 opacity-40 group-hover:opacity-100 transition-opacity duration-500">
@@ -167,55 +177,79 @@ const allSections = computed(() => [
           </svg>
         </div>
 
-        <div class="relative z-10 flex flex-col gap-4 h-full">
-          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
-            <Brain :size="20" stroke-width="1.5" />
+        <div class="relative z-10 flex flex-col gap-4 h-full pointer-events-none">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
+              <Brain :size="20" stroke-width="1.5" />
+            </div>
+            <!-- Docs Chip -->
+            <div class="flex items-center gap-1.5 px-2 py-1.5 rounded border border-border bg-muted/30 text-muted-foreground opacity-0 group-hover:opacity-40 transition-all duration-300 shadow-none z-20">
+              <ExternalLink class="w-3.5 h-3.5" />
+            </div>
           </div>
           <div class="flex flex-col gap-2 mt-auto">
-            <h3 class="font-semibold text-lg text-foreground tracking-tight">{{ t('usecases.items.f3.title') }}</h3>
+            <h3 class="font-semibold text-lg text-foreground tracking-tight group-hover:underline underline-offset-4">{{ t('usecases.items.f3.title') }}</h3>
             <p class="text-sm text-muted-foreground leading-relaxed">{{ t('usecases.items.f3.desc') }}</p>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- 3. Square Card: Web UI (1x1) -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 transition-all duration-300 shadow-none hover:border-foreground/20 md:col-span-1 md:row-span-1 min-h-[200px] md:min-h-0" tabindex="0">
-        <div class="relative z-10 flex flex-col gap-4 h-full">
-          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
-            <LayoutDashboard :size="20" stroke-width="1.5" />
+      <a href="https://docs.memoh.ai/getting-started/sessions.html#in-the-web-ui" target="_blank" rel="noopener noreferrer" class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 transition-all duration-300 shadow-none hover:border-foreground/20 hover:shadow-sm md:col-span-1 md:row-span-1 min-h-[200px] md:min-h-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <div class="relative z-10 flex flex-col gap-4 h-full pointer-events-none">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
+              <LayoutDashboard :size="20" stroke-width="1.5" />
+            </div>
+            <!-- Docs Chip -->
+            <div class="flex items-center gap-1.5 px-2 py-1.5 rounded border border-border bg-muted/30 text-muted-foreground opacity-0 group-hover:opacity-40 transition-all duration-300 shadow-none z-20">
+              <ExternalLink class="w-3.5 h-3.5" />
+            </div>
           </div>
           <div class="flex flex-col gap-1.5 mt-auto">
-            <h3 class="font-semibold text-base text-foreground tracking-tight">{{ t('usecases.items.f10.title') }}</h3>
+            <h3 class="font-semibold text-base text-foreground tracking-tight group-hover:underline underline-offset-4">{{ t('usecases.items.f10.title') }}</h3>
             <p class="text-xs text-muted-foreground leading-relaxed">{{ t('usecases.items.f10.desc') }}</p>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- 4. Square Card: Containerized (1x1) -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 transition-all duration-300 shadow-none hover:border-foreground/20 md:col-span-1 md:row-span-1 min-h-[200px] md:min-h-0" tabindex="0">
-        <div class="relative z-10 flex flex-col gap-4 h-full">
-          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
-             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+      <a href="https://docs.memoh.ai/getting-started/container" target="_blank" rel="noopener noreferrer" class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 transition-all duration-300 shadow-none hover:border-foreground/20 hover:shadow-sm md:col-span-1 md:row-span-1 min-h-[200px] md:min-h-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <div class="relative z-10 flex flex-col gap-4 h-full pointer-events-none">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
+               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            </div>
+            <!-- Docs Chip -->
+            <div class="flex items-center gap-1.5 px-2 py-1.5 rounded border border-border bg-muted/30 text-muted-foreground opacity-0 group-hover:opacity-40 transition-all duration-300 shadow-none z-20">
+              <ExternalLink class="w-3.5 h-3.5" />
+            </div>
           </div>
           <div class="flex flex-col gap-1.5 mt-auto">
-            <h3 class="font-semibold text-base text-foreground tracking-tight">{{ t('usecases.items.f2.title') }}</h3>
+            <h3 class="font-semibold text-base text-foreground tracking-tight group-hover:underline underline-offset-4">{{ t('usecases.items.f2.title') }}</h3>
             <p class="text-xs text-muted-foreground leading-relaxed">{{ t('usecases.items.f2.desc') }}</p>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- 5. Square Card: MCP (1x1) -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 transition-all duration-300 shadow-none hover:border-foreground/20 md:col-span-1 md:row-span-1 min-h-[200px] md:min-h-0" tabindex="0">
-        <div class="relative z-10 flex flex-col gap-4 h-full">
-          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
-            <Wrench :size="20" stroke-width="1.5" />
+      <a href="https://docs.memoh.ai/getting-started/mcp" target="_blank" rel="noopener noreferrer" class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-background p-6 transition-all duration-300 shadow-none hover:border-foreground/20 hover:shadow-sm md:col-span-1 md:row-span-1 min-h-[200px] md:min-h-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <div class="relative z-10 flex flex-col gap-4 h-full pointer-events-none">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:border-primary/20 group-hover:bg-primary/5">
+              <Wrench :size="20" stroke-width="1.5" />
+            </div>
+            <!-- Docs Chip -->
+            <div class="flex items-center gap-1.5 px-2 py-1.5 rounded border border-border bg-muted/30 text-muted-foreground opacity-0 group-hover:opacity-40 transition-all duration-300 shadow-none z-20">
+              <ExternalLink class="w-3.5 h-3.5" />
+            </div>
           </div>
           <div class="flex flex-col gap-1.5 mt-auto">
-            <h3 class="font-semibold text-base text-foreground tracking-tight">{{ t('usecases.items.f5.title') }}</h3>
+            <h3 class="font-semibold text-base text-foreground tracking-tight group-hover:underline underline-offset-4">{{ t('usecases.items.f5.title') }}</h3>
             <p class="text-xs text-muted-foreground leading-relaxed">{{ t('usecases.items.f5.desc') }}</p>
           </div>
         </div>
-      </div>
+      </a>
 
     </div>
 
@@ -245,9 +279,12 @@ const allSections = computed(() => [
           
           <!-- Sticky Header -->
           <div class="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-5 bg-background/95 backdrop-blur-md relative after:absolute after:bottom-0 after:left-6 after:right-6 md:after:left-10 md:after:right-10 after:h-px after:bg-border">
-            <h2 id="modal-title" class="font-semibold text-lg md:text-xl text-foreground tracking-tight">
-              {{ locale === 'zh' ? '全部 13 项核心能力' : 'All 13 capabilities' }}
-            </h2>
+            <a href="https://docs.memoh.ai/overview/about" target="_blank" rel="noopener noreferrer" class="group/link flex items-center gap-1.5 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+              <h2 id="modal-title" class="font-semibold text-lg md:text-xl text-foreground tracking-tight hover:underline underline-offset-4">
+                {{ locale === 'zh' ? '全部 13 项核心能力' : 'All 13 capabilities' }}
+              </h2>
+              <ExternalLink class="w-4 h-4 text-muted-foreground hidden md:block opacity-0 group-hover/link:opacity-40 transition-opacity" />
+            </a>
             <button @click="closeModal" 
                     class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring border border-transparent shadow-none"
                     aria-label="Close specifications">
@@ -265,20 +302,26 @@ const allSections = computed(() => [
                   <div class="flex items-center justify-center w-8 h-8 rounded-md bg-muted text-foreground border border-border shrink-0 shadow-none">
                     <component :is="section.icon" class="w-4 h-4" />
                   </div>
-                  <h3 class="font-semibold text-lg text-foreground tracking-tight">{{ section.title }}</h3>
+                  <a :href="'url' in section ? (section as any).url : 'https://docs.memoh.ai'" target="_blank" rel="noopener noreferrer" class="group/link flex items-center gap-1.5 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+                    <h3 class="font-semibold text-lg text-foreground tracking-tight hover:underline underline-offset-4">{{ section.title }}</h3>
+                    <ExternalLink class="w-4 h-4 text-muted-foreground hidden md:block opacity-0 group-hover/link:opacity-40 transition-opacity" />
+                  </a>
                 </div>
                 
                 <!-- Section Items (Concise List) -->
                 <div class="flex flex-col gap-6 pl-11">
-                  <div v-for="item in section.items" :key="item.key" class="flex flex-col gap-1.5">
-                    <h4 class="font-medium text-base text-foreground tracking-tight flex items-center gap-2">
+                  <a v-for="item in section.items" :key="item.key" :href="'url' in item ? (item as any).url : 'https://docs.memoh.ai'" target="_blank" rel="noopener noreferrer" class="group/item flex flex-col gap-1.5 relative w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+                    <div class="flex items-center gap-2">
                       <component :is="item.icon" class="w-4 h-4 text-muted-foreground shrink-0" />
-                      {{ t('usecases.items.' + item.key + '.title') }}
-                    </h4>
+                      <h4 class="font-medium text-base text-foreground tracking-tight flex items-center gap-1.5 group-hover/item:underline underline-offset-4">
+                        {{ t('usecases.items.' + item.key + '.title') }}
+                        <ExternalLink class="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover/item:opacity-40 transition-opacity hidden md:block shrink-0" />
+                      </h4>
+                    </div>
                     <p class="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap max-w-2xl pl-6">
                       {{ t('usecases.items.' + item.key + '.desc') }}
                     </p>
-                  </div>
+                  </a>
                 </div>
               </div>
 
