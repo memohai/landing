@@ -1,0 +1,148 @@
+{
+  "nav": {
+    "docs": "Docs",
+    "github": "GitHub",
+    "supermarket": "Supermarket"
+  },
+  "seo": {
+    "title": "MemohAI - The Agent OS | Self-hosted & Containerized Isolation",
+    "description": "Memoh is an Agent OS built for hackers and AI developers. Self-hosted, highly concurrent, and zero telemetry. Featuring containerized isolation and long-term memory for secure agent orchestration."
+  },
+  "hero": {
+    "title": "The Agent OS",
+    "subtitle": "Self-hosted, highly concurrent, zero telemetry. Built for hackers and AI developers.",
+    "cta": "Get Started",
+    "skip": "Skip ⏭"
+  },
+  "install": {
+    "title": "Deploy in one command",
+    "subtitle": "A single script handles the containers, memory stores, and models. Say goodbye to dependency hell and get your Agent OS running instantly.",
+    "script": {
+      "info": "[+] Starting Memoh Cluster...",
+      "success": "SUCCESS: Agent nexus-01 initialized.",
+      "final": "✅ Memoh is running!"
+    }
+  },
+  "usecases": {
+    "title": "Built for Production Scenarios",
+    "subtitle": "From personal assistants to massive automation scripts, Memoh provides the sandboxes and memory backend to keep your agents running flawlessly.",
+    "sections": {
+      "core": "Core Architecture",
+      "agent": "Agent Capabilities",
+      "mgmt": "Management & Control"
+    },
+    "items": {
+      "f1": {
+        "title": "Multi-Bot & Multi-User",
+        "desc": "Ditch the simple chatbox. Spin up a whole squad of agents that recognize users in group chats and talk to each other."
+      },
+      "f2": {
+        "title": "Containerized Isolation",
+        "desc": "Every agent gets its own sandbox. Even if it runs malicious code or crashes hard, your host machine doesn't feel a thing."
+      },
+      "f3": {
+        "title": "Memory Engineering",
+        "desc": "True long-term memory. Agents quietly extract facts from your chats. Hybrid search ensures they never drop context."
+      },
+      "f4": {
+        "title": "Omnichannel Native",
+        "desc": "Write once, run anywhere. Hook your agents directly into Telegram, Discord, Matrix, or WeChat without rebuilding."
+      },
+      "f5": {
+        "title": "MCP Ecosystem",
+        "desc": "Native MCP support. Stop writing glue code. Let your agents control your local machine and endless external APIs directly."
+      },
+      "f6": {
+        "title": "Browser Automation",
+        "desc": "Headless browser automation. Backed by Playwright, agents can scrape, navigate, and fill out forms exactly like you do."
+      },
+      "f7": {
+        "title": "Skills & Subagents",
+        "desc": "Keep it modular. Grab skills from the registry or spawn sub-agents to handle the messy, independent tasks in the background."
+      },
+      "f8": {
+        "title": "Discussion Sessions",
+        "desc": "Advanced multi-threading. Use slash commands to pause, inspect, and debug your agent's exact thought process in real-time."
+      },
+      "f9": {
+        "title": "Workflow Automation",
+        "desc": "Built-in cron jobs. Tell your agent to wake up at 3 AM, scrape the daily logs, and drop a summary in your inbox."
+      },
+      "f10": {
+        "title": "Professional Web UI",
+        "desc": "A dashboard you actually want to use. Watch streams, debug tool calls, and peek into container files right from your browser."
+      },
+      "f11": {
+        "title": "Access Control (ACL)",
+        "desc": "Secure by default. Set up tight ACLs based on user IDs or channels. You decide exactly who gets to trigger what."
+      },
+      "f12": {
+        "title": "Multi-Model Routing",
+        "desc": "Bring your own models. Plug into OpenAI, Anthropic, or point it at your local Ollama node to save some cash."
+      },
+      "f13": {
+        "title": "Instant Deployment",
+        "desc": "Zero fuss deployment. Just Docker. It handles migrations and CNI networking so you can boot the cluster in under three minutes."
+      }
+    }
+  },
+  "gallery": {
+    "title": "Platform Features",
+    "subtitle": "A glimpse into the core capabilities of the Memoh ecosystem.",
+    "tabs": {
+      "t1": "Chat",
+      "t2": "Container",
+      "t3": "Providers",
+      "t4": "File Manager",
+      "t5": "Scheduled Tasks",
+      "t6": "Token Usage"
+    },
+    "desc": {
+      "d1": "Chat with your agents anywhere. Memory syncs across all your devices in real-time.\nFrom private DMs to chaotic group chats, they never lose the plot.",
+      "d2": "Every agent is locked in its own 'private room' with zero access to host files.\nIf a script goes rogue or crashes, it stays in the box. No harm done.",
+      "d3": "Plug in your favorite LLMs, or point it at your local Ollama cluster.\nMix and match compute engines like Lego to get the best bang for your buck.",
+      "d4": "Skip the terminal. Manage private files inside containers with a clean web view.\nControl exactly who sees what, keeping all agent-generated data totally secure.",
+      "d5": "Set up cron tasks and heartbeats to keep agents busy while you sleep.\nWhether it's daily scraping or syncing docs, they handle the heavy lifting.",
+      "d6": "Stop guessing where your budget goes. Track every token and cent in real-time.\nSpot exactly which models are burning cash and where you can save power."
+    }
+  },
+  "arch": {
+    "title": "The Virtual Computer Architecture",
+    "a1": {
+      "title": "Containerized Isolation",
+      "desc": "Every bot runs in its own 'virtual computer' via containerd. Isolated filesystems and networks ensure the host is safe even if a tool fails."
+    },
+    "a2": {
+      "title": "Advanced Memory",
+      "desc": "Pluggable hybrid retrieval (Dense + Sparse + BM25) paired with LLM-driven fact extraction. Bots maintain autonomous long-term recall."
+    },
+    "a3": {
+      "title": "Omnichannel Native",
+      "desc": "First-class support for Telegram, Discord, Lark, WeChat, Matrix, and Email. Deploy your agent logic once and interact anywhere."
+    }
+  },
+  "ecosystem": {
+    "title": "Ecosystem & SDKs",
+    "e1": {
+      "title": "Memoh / Supermarket",
+      "desc": "Official Skill & MCP Registry →"
+    },
+    "e2": {
+      "title": "Memoh / twilight-ai",
+      "desc": "Lightweight AI SDK for Go →"
+    },
+    "e3": {
+      "title": "Memoh / Autofish",
+      "desc": "Android Device Automation Agent →"
+    }
+  },
+  "cta_bottom": {
+    "title": "Experience Memoh now.",
+    "btn": "Start with one command"
+  },
+  "footer": {
+    "copyright": "© 2026 MemohAI. Open Source",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  }
+}

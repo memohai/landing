@@ -23,4 +23,15 @@ dist-ssr
 *.sln
 *.sw?
 
-.pnpm-store
+# AI Configuration & Design Specs
+.gemini/
+.claude/
+.cursor/
+*-Spec*.md
+*-Proposals.md
+Design-new.md
+DESIGN.md
+MemohAI-Landing-Page-PRD.md
+TECH_STACK.md
+*.bak
+FigmaMake-Memoh-Landing-Page-Detailed.md
