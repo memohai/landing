@@ -1,0 +1,27 @@
+# MemohAI - The Agent OS
+
+Memoh is an Agent OS built for hackers and AI developers. It is self-hosted, highly concurrent, and has zero telemetry. It features containerized isolation and long-term memory for secure agent orchestration.
+
+## Core Capabilities
+- **Multi-Bot & Multi-User**: Deploy squads of agents that recognize users in group chats.
+- **Containerized Isolation**: Every agent gets its own sandbox via containerd, ensuring the host machine remains safe.
+- **Memory Engineering**: True long-term memory with hybrid search (Dense + Sparse + BM25) and LLM-driven fact extraction.
+- **Omnichannel Native**: Direct hooks into Telegram, Discord, Matrix, Lark, WeChat, and Email.
+- **MCP Ecosystem**: Native Model Context Protocol (MCP) support for local machine and external API control.
+- **Browser Automation**: Headless browser automation backed by Playwright.
+- **Skills & Subagents**: Modular design allowing agents to use skills or spawn sub-agents.
+- **Workflow Automation**: Built-in cron jobs for scheduled tasks.
+- **Access Control (ACL)**: Tight ACLs based on user IDs or channels.
+- **Multi-Model Routing**: Support for OpenAI, Anthropic, or local Ollama nodes.
+- **Instant Deployment**: Deploy the entire cluster (containers, memory stores, models) in under three minutes via a single Docker script.
+
+## Quick Start
+```bash
+curl -sL https://memoh.sh | bash
+```
+
+## Links
+- Website: https://memoh.ai
+- Documentation: https://docs.memoh.ai
+- GitHub: https://github.com/memohai/Memoh
+- Plugin Market: https://github.com/memohai/supermarket

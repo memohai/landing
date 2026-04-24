@@ -8,6 +8,7 @@ import HeroSection from './components/HeroSection.vue'
 import InstallModule from './components/InstallModule.vue'
 import UseCasesGrid from './components/UseCasesGrid.vue'
 import FeatureGallery from './components/FeatureGallery.vue'
+import heroImage from './assets/hero.png'
 import BackgroundCanvas from './components/BackgroundCanvas.vue'
 
 const isDark = useDark()
@@ -23,7 +24,7 @@ useSeoMeta({
   ogDescription: () => t('seo.description'),
   ogType: 'website',
   ogUrl: 'https://memoh.ai',
-  ogImage: 'https://memoh.ai/hero.png',
+  ogImage: heroImage,
   twitterCard: 'summary_large_image',
   twitterTitle: () => t('seo.title'),
   twitterDescription: () => t('seo.description'),
@@ -38,6 +39,21 @@ useHead({
     {
       rel: 'canonical',
       href: 'https://memoh.ai',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: 'https://memoh.ai/',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'zh',
+      href: 'https://memoh.ai/',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: 'https://memoh.ai/',
     },
   ],
   script: [

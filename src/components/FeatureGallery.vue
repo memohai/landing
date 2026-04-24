@@ -2,6 +2,12 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { X, Search, Pause, Play } from 'lucide-vue-next'
+import image01 from '../assets/gallery/01.png'
+import image02 from '../assets/gallery/02.png'
+import image03 from '../assets/gallery/03.png'
+import image04 from '../assets/gallery/04.png'
+import image05 from '../assets/gallery/05.png'
+import image06 from '../assets/gallery/06.png'
 
 const { t } = useI18n()
 
@@ -13,12 +19,12 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
-  { id: 1, key: 't1', image: 'https://raw.githubusercontent.com/memohai/Memoh/main/assets/gallery/01.png', descKey: 'd1' },
-  { id: 2, key: 't2', image: 'https://raw.githubusercontent.com/memohai/Memoh/main/assets/gallery/02.png', descKey: 'd2' },
-  { id: 3, key: 't3', image: 'https://raw.githubusercontent.com/memohai/Memoh/main/assets/gallery/03.png', descKey: 'd3' },
-  { id: 4, key: 't4', image: 'https://raw.githubusercontent.com/memohai/Memoh/main/assets/gallery/04.png', descKey: 'd4' },
-  { id: 5, key: 't5', image: 'https://raw.githubusercontent.com/memohai/Memoh/main/assets/gallery/05.png', descKey: 'd5' },
-  { id: 6, key: 't6', image: 'https://raw.githubusercontent.com/memohai/Memoh/main/assets/gallery/06.png', descKey: 'd6' }
+  { id: 1, key: 't1', image: image01, descKey: 'd1' },
+  { id: 2, key: 't2', image: image02, descKey: 'd2' },
+  { id: 3, key: 't3', image: image03, descKey: 'd3' },
+  { id: 4, key: 't4', image: image04, descKey: 'd4' },
+  { id: 5, key: 't5', image: image05, descKey: 'd5' },
+  { id: 6, key: 't6', image: image06, descKey: 'd6' }
 ]
 
 const activeTab = ref<Tab>(tabs[0])
