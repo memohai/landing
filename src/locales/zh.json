@@ -1,8 +1,8 @@
 {
   "nav": {
-    "docs": "开发文档",
+    "docs": "文档",
     "github": "GitHub",
-    "supermarket": "插件市场"
+    "supermarket": "Supermarket"
   },
   "seo": {
     "title": "MemohAI - 智能体平台 | 私有化部署 & 容器化隔离",
@@ -11,7 +11,7 @@
   "hero": {
     "title": "智能体平台",
     "subtitle": "私有化部署。高并发。零遥测。专为极客与 AI 开发者打造。",
-    "cta": "立即部署",
+    "cta": "开始",
     "skip": "跳过动画 ⏭"
   },
   "install": {
@@ -124,7 +124,7 @@
   "ecosystem": {
     "title": "生态系统与 SDK",
     "e1": {
-      "title": "Memoh / 插件市场",
+      "title": "Memoh / supermarket",
       "desc": "官方技能与 MCP 注册中心 →"
     },
     "e2": {
@@ -141,7 +141,7 @@
     "btn": "一行命令启动"
   },
   "footer": {
-    "copyright": "© 2026 MemohAI. 拥抱开源",
+    "copyright": "© 2026 MemohAI LTD. All rights reserved.",
     "privacy": "隐私政策",
     "terms": "服务条款"
   }
