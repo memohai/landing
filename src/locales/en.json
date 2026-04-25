@@ -5,11 +5,11 @@
     "supermarket": "Supermarket"
   },
   "seo": {
-    "title": "MemohAI - The Agent OS | Self-hosted & Containerized Isolation",
+    "title": "MemohAI - The Agent Orchestrator | Self-hosted & Containerized Isolation",
     "description": "Memoh is an Agent OS built for hackers and AI developers. Self-hosted, highly concurrent, and zero telemetry. Featuring containerized isolation and long-term memory for secure agent orchestration."
   },
   "hero": {
-    "title": "The Agent OS",
+    "title": "The Agent Orchestrator",
     "subtitle": "Self-hosted, highly concurrent, zero telemetry. Built for hackers and AI developers.",
     "cta": "Get Started",
     "skip": "Skip ⏭"
