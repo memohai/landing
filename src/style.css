@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Inter", sans-serif;
   --font-mono: "Fira Code", monospace;
@@ -45,7 +47,7 @@
     --accent: #27272a;
     --accent-foreground: #fafafa;
     --border: #27272a;
-    --destructive: #7f1d1d;
+    --destructive: #ef4444;
     --destructive-foreground: #fafafa;
     --ring: #d4d4d8;
   }
