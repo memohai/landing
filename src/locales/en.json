@@ -2,7 +2,24 @@
   "nav": {
     "docs": "Docs",
     "github": "GitHub",
-    "supermarket": "Supermarket"
+    "supermarket": "Supermarket",
+    "desktop": "Desktop"
+  },
+  "desktop": {
+    "seo": {
+      "title": "Memoh Desktop - Download for macOS, Windows & Linux",
+      "description": "Download the Memoh desktop app for macOS (Apple Silicon & Intel), Windows, and Linux. Run your Agent OS natively on your computer."
+    },
+    "title": "Memoh on your desktop",
+    "subtitle": "Run Memoh natively on your computer. Built for macOS, Windows and Linux — install once, work everywhere.",
+    "download": "Download",
+    "docs": "Docs",
+    "os": {
+      "macArm": "macOS (Apple Silicon)",
+      "macIntel": "macOS (Intel)",
+      "win": "Windows (x64)",
+      "linux": "Linux (x64)"
+    }
   },
   "seo": {
     "title": "MemohAI - The Agent Orchestrator | Self-hosted & Containerized Isolation",

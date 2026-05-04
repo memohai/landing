@@ -2,7 +2,24 @@
   "nav": {
     "docs": "文档",
     "github": "GitHub",
-    "supermarket": "Supermarket"
+    "supermarket": "Supermarket",
+    "desktop": "桌面版"
+  },
+  "desktop": {
+    "seo": {
+      "title": "Memoh 桌面版 - macOS、Windows 与 Linux 下载",
+      "description": "下载 Memoh 桌面应用，支持 macOS (Apple Silicon 与 Intel)、Windows 与 Linux，让你的智能体平台原生跑在自己的电脑上。"
+    },
+    "title": "Memoh 桌面版",
+    "subtitle": "在你的电脑上原生跑起 Memoh。为 macOS、Windows 与 Linux 打造，一次安装，处处可用。",
+    "download": "下载",
+    "docs": "文档",
+    "os": {
+      "macArm": "macOS (Apple Silicon)",
+      "macIntel": "macOS (Intel)",
+      "win": "Windows (x64)",
+      "linux": "Linux (x64)"
+    }
   },
   "seo": {
     "title": "MemohAI - 智能体平台 | 私有化部署 & 容器化隔离",
