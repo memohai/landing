@@ -10,7 +10,7 @@ defineProps<{
   hideNav?: boolean
 }>()
 
-const isDark = useDark()
+const isDark = useDark({ initialValue: 'dark' })
 const toggleDark = useToggle(isDark)
 
 const { locale } = useI18n()
