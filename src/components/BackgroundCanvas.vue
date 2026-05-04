@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useDark, useEventListener } from '@vueuse/core'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
-const isDark = useDark()
+const isDark = useDark({ initialValue: 'dark' })
 
 // Physics parameters
 const MOUSE_LERP = 0.08
