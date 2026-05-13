@@ -46,14 +46,21 @@ const toggleDownload = () => {
 type DownloadOption = {
   key: 'macArm' | 'macIntel' | 'win' | 'linux'
   icon: string
-  href: string
+  href?: string
+}
+
+const downloadUrls = {
+  macArm: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_ARM,
+  macIntel: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_INTEL,
+  win: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_WINDOWS,
+  linux: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX,
 }
 
 const downloadOptions: DownloadOption[] = [
-  { key: 'macArm', icon: 'mdi:apple', href: '#' },
-  { key: 'macIntel', icon: 'mdi:apple', href: '#' },
-  { key: 'win', icon: 'mdi:microsoft-windows', href: '#' },
-  { key: 'linux', icon: 'mdi:linux', href: '#' },
+  { key: 'macArm', icon: 'mdi:apple', href: downloadUrls.macArm },
+  { key: 'macIntel', icon: 'mdi:apple', href: downloadUrls.macIntel },
+  { key: 'win', icon: 'mdi:microsoft-windows', href: downloadUrls.win },
+  { key: 'linux', icon: 'mdi:linux', href: downloadUrls.linux },
 ]
 </script>
 
@@ -99,11 +106,13 @@ const downloadOptions: DownloadOption[] = [
             <a
               v-for="opt in downloadOptions"
               :key="opt.key"
-              :href="opt.href"
+              :href="opt.href || undefined"
               target="_blank"
               rel="noopener noreferrer"
               role="menuitem"
+              :aria-disabled="!opt.href"
               class="group flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-accent transition-colors"
+              :class="{ 'pointer-events-none opacity-50': !opt.href }"
               @click="isDownloadOpen = false"
             >
               <Icon :icon="opt.icon" class="w-5 h-5 shrink-0 text-muted-foreground group-hover:text-foreground" />
