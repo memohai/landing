@@ -34,6 +34,15 @@ const downloadFileName = (tag, slug) => {
   return `Memoh-${sanitizeFileNamePart(tag)}-${sanitizeFileNamePart(slug)}`
 }
 
+const githubAssetFileName = (tag, slug) => {
+  const version = tag.replace(/^v/i, '')
+  return `Memoh-Desktop-${version}-${slug}`
+}
+
+const githubAssetUrl = (repo, tag, slug) => {
+  return `https://github.com/${repo}/releases/download/${encodeURIComponent(tag)}/${encodeURIComponent(githubAssetFileName(tag, slug))}`
+}
+
 const jsonResponse = (body, init = {}) => {
   return new Response(JSON.stringify(body, null, 2), {
     ...init,
@@ -67,7 +76,9 @@ const githubFetch = async (url, env, accept) => {
   })
 
   if (!response.ok) {
-    throw new Error(`GitHub request failed: ${response.status} ${url}`)
+    const detail = await response.text().catch(() => '')
+    const message = detail ? ` ${detail.slice(0, 240)}` : ''
+    throw new Error(`GitHub request failed: ${response.status} ${url}${message}`)
   }
 
   return response
@@ -83,8 +94,13 @@ const pickLatestRelease = (releases) => {
     .sort((a, b) => releaseTimestamp(b) - releaseTimestamp(a))[0]
 }
 
-const getLatestRelease = async (env) => {
+const getLatestRelease = async (env, ctx) => {
   const repo = env.MEMOH_RELEASE_REPO || RELEASE_REPO
+  const cache = caches.default
+  const cacheKey = new Request(`https://memoh.internal/downloads/latest-release/${encodeURIComponent(repo)}`)
+  const cached = await cache.match(cacheKey)
+  if (cached) return cached.json()
+
   const response = await githubFetch(`https://api.github.com/repos/${repo}/releases?per_page=30`, env)
   const latest = pickLatestRelease(await response.json())
 
@@ -92,12 +108,16 @@ const getLatestRelease = async (env) => {
     throw new Error(`No published releases found for ${repo}`)
   }
 
+  ctx.waitUntil(cache.put(cacheKey, jsonResponse(latest, {
+    headers: cacheHeaders(LATEST_TTL_SECONDS),
+  })))
+
   return latest
 }
 
-const getRelease = async (tag, env) => {
+const getRelease = async (tag, env, ctx) => {
   if (tag === 'latest') {
-    return getLatestRelease(env)
+    return getLatestRelease(env, ctx)
   }
 
   const repo = env.MEMOH_RELEASE_REPO || RELEASE_REPO
@@ -172,11 +192,10 @@ const proxyAsset = async (request, env, ctx, tag, slug) => {
     if (cached) return withCacheStatus(cached, 'HIT')
   }
 
-  const release = await getRelease(tag, env)
-  const selected = findAsset(release, slug)
-  if (!selected) return notFound()
+  if (!ASSETS[slug]) return notFound()
 
-  const assetResponse = await fetch(selected.asset.browser_download_url, {
+  const repo = env.MEMOH_RELEASE_REPO || RELEASE_REPO
+  const assetResponse = await fetch(githubAssetUrl(repo, tag, slug), {
     method: request.method === 'HEAD' ? 'HEAD' : 'GET',
     headers: {
       'user-agent': 'memoh-landing-download-proxy',
@@ -195,8 +214,8 @@ const proxyAsset = async (request, env, ctx, tag, slug) => {
     headers: assetResponse.headers,
   })
   response.headers.set('cache-control', `public, max-age=${ASSET_TTL_SECONDS}, immutable`)
-  response.headers.set('content-disposition', `attachment; filename="${downloadFileName(release.tag_name, slug)}"`)
-  response.headers.set('x-memoh-release-tag', release.tag_name)
+  response.headers.set('content-disposition', `attachment; filename="${downloadFileName(tag, slug)}"`)
+  response.headers.set('x-memoh-release-tag', tag)
   response.headers.set('x-memoh-cache', 'MISS')
   response.headers.delete('set-cookie')
 
@@ -238,7 +257,7 @@ export default {
         const cached = await cache.match(cacheKey)
         if (cached) return withCacheStatus(cached, 'HIT')
 
-        const release = await getRelease(parsed.tag, env)
+        const release = await getRelease(parsed.tag, env, ctx)
         const response = jsonResponse(request.method === 'HEAD' ? undefined : buildManifest(url, release, env.MEMOH_RELEASE_REPO || RELEASE_REPO), {
           headers: cacheHeaders(parsed.tag === 'latest' ? LATEST_TTL_SECONDS : ASSET_TTL_SECONDS, {
             'x-memoh-cache': 'MISS',
@@ -253,7 +272,7 @@ export default {
       if (!ASSETS[parsed.file]) return notFound()
 
       if (parsed.tag === 'latest') {
-        const release = await getRelease('latest', env)
+        const release = await getRelease('latest', env, ctx)
         const redirectUrl = new URL(request.url)
         redirectUrl.pathname = `${DOWNLOAD_PREFIX}/${encodeURIComponent(release.tag_name)}/${parsed.file}`
 

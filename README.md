@@ -84,7 +84,19 @@ Deploy the Worker after configuring the `memoh.ai/downloads/desktop/*` route:
 npx wrangler deploy --config workers/wrangler.toml
 ```
 
-For higher GitHub API limits, set a Worker secret:
+GitHub Actions also deploys the Worker from `.github/workflows/deploy-download-worker.yml` when files under `workers/` change. Add these repository secrets before relying on the workflow:
+
+```text
+CLOUDFLARE_API_TOKEN
+CLOUDFLARE_ACCOUNT_ID
+MEMOH_GITHUB_TOKEN
+```
+
+`MEMOH_GITHUB_TOKEN` is written to the Worker as the runtime `GITHUB_TOKEN` secret, so the Worker can call the GitHub Releases API without hitting unauthenticated rate limits. A fine-grained read-only token for the release repository is enough.
+
+If a download URL returns a GitHub Pages 404 page, the Worker route is not active for that path yet. Re-run the Worker deployment and, if Cloudflare cached the old 404, purge `/downloads/desktop/*`.
+
+For manual deployments, set the Worker secret directly:
 
 ```bash
 npx wrangler secret put GITHUB_TOKEN --config workers/wrangler.toml

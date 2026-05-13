@@ -5,7 +5,12 @@ on:
     branches:
       - main
     paths:
-      - './'
+      - 'index.html'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'public/**'
+      - 'scripts/**'
+      - 'src/**'
       - '.github/workflows/deploy-landing.yml'
   workflow_dispatch:
 
