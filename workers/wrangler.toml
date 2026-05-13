@@ -1,0 +1,10 @@
+name = "memoh-desktop-downloads"
+main = "desktop-download-proxy.js"
+compatibility_date = "2025-01-01"
+
+routes = [
+  { pattern = "memoh.ai/downloads/desktop/*", zone_name = "memoh.ai" }
+]
+
+[vars]
+MEMOH_RELEASE_REPO = "memohai/Memoh"

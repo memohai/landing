@@ -63,3 +63,29 @@ Create a production-ready, minified build:
 ```bash
 npm run build
 ```
+
+## Desktop Download Proxy
+
+Desktop installers are served through a Cloudflare Worker at:
+
+```text
+/downloads/desktop/latest/mac-arm64.dmg
+/downloads/desktop/latest/mac-x64.dmg
+/downloads/desktop/latest/win-x64-setup.exe
+/downloads/desktop/latest/linux-amd64.deb
+/downloads/desktop/latest/linux-x86_64.AppImage
+```
+
+The Worker resolves the latest `memohai/Memoh` release, redirects to a same-domain versioned URL, then caches the release asset at Cloudflare edge on first download. Users never download from a GitHub release URL directly.
+
+Deploy the Worker after configuring the `memoh.ai/downloads/desktop/*` route:
+
+```bash
+npx wrangler deploy --config workers/wrangler.toml
+```
+
+For higher GitHub API limits, set a Worker secret:
+
+```bash
+npx wrangler secret put GITHUB_TOKEN --config workers/wrangler.toml
+```

@@ -1,10 +1,20 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import { BookOpen, ChevronDown, Download } from 'lucide-vue-next'
+import { BookOpen, ChevronDown } from 'lucide-vue-next'
 import { Icon } from '@iconify/vue'
 import { useI18n } from 'vue-i18n'
 import { useHead, useSeoMeta } from '@unhead/vue'
+import {
+  desktopDownloadOptions,
+  getDesktopDownloadHref,
+  type DesktopDownloadKey,
+} from '../lib/desktopDownloads'
+import {
+  getInitialDesktopDownloadKey,
+  resolvePreferredDesktopDownloadKey,
+} from '../lib/desktopDevice'
+import { fetchDesktopReleaseInfo, type DesktopReleaseInfo } from '../lib/desktopRelease'
 
 const { locale, t } = useI18n()
 
@@ -34,6 +44,9 @@ useHead({
 
 const isDownloadOpen = ref(false)
 const downloadMenuRef = ref<HTMLElement | null>(null)
+const preferredDownloadKey = ref<DesktopDownloadKey | undefined>(getInitialDesktopDownloadKey())
+const releaseInfo = ref<DesktopReleaseInfo | undefined>()
+const isReleaseInfoLoading = ref(false)
 
 onClickOutside(downloadMenuRef, () => {
   isDownloadOpen.value = false
@@ -43,27 +56,73 @@ const toggleDownload = () => {
   isDownloadOpen.value = !isDownloadOpen.value
 }
 
-type DownloadOption = {
-  key: 'macArm' | 'macIntel' | 'win' | 'linuxDebAmd64' | 'linuxAppImageX86'
-  icon: string
-  href?: string
+const updatePreferredDownload = async () => {
+  preferredDownloadKey.value = await resolvePreferredDesktopDownloadKey() || preferredDownloadKey.value
 }
 
-const downloadUrls = {
-  macArm: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_ARM,
-  macIntel: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_INTEL,
-  win: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_WINDOWS,
-  linuxDebAmd64: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_DEB_AMD64,
-  linuxAppImageX86: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_APPIMAGE_X86_64,
+const updateReleaseInfo = async () => {
+  isReleaseInfoLoading.value = true
+  try {
+    releaseInfo.value = await fetchDesktopReleaseInfo()
+  } finally {
+    isReleaseInfoLoading.value = false
+  }
 }
 
-const downloadOptions: DownloadOption[] = [
-  { key: 'macArm', icon: 'mdi:apple', href: downloadUrls.macArm },
-  { key: 'macIntel', icon: 'mdi:apple', href: downloadUrls.macIntel },
-  { key: 'win', icon: 'mdi:microsoft-windows', href: downloadUrls.win },
-  { key: 'linuxDebAmd64', icon: 'mdi:linux', href: downloadUrls.linuxDebAmd64 },
-  { key: 'linuxAppImageX86', icon: 'mdi:linux', href: downloadUrls.linuxAppImageX86 },
-]
+onMounted(() => {
+  void updatePreferredDownload()
+  void updateReleaseInfo()
+})
+
+const downloadTag = computed(() => releaseInfo.value?.tag)
+const downloadOptions = computed(() => {
+  return desktopDownloadOptions.map((opt) => ({
+    ...opt,
+    href: getDesktopDownloadHref(opt.key, downloadTag.value),
+  }))
+})
+const preferredDownload = computed(() => {
+  return downloadOptions.value.find((opt) => opt.key === preferredDownloadKey.value)
+})
+const preferredDownloadHref = computed(() => getDesktopDownloadHref(preferredDownloadKey.value, downloadTag.value))
+const preferredDownloadIcon = computed(() => preferredDownload.value?.icon || 'mdi:desktop-classic')
+const releasePublishedDate = computed(() => {
+  if (!releaseInfo.value?.publishedAt) return ''
+
+  const date = new Date(releaseInfo.value.publishedAt)
+  if (Number.isNaN(date.getTime())) return ''
+
+  return new Intl.DateTimeFormat(locale.value === 'zh' ? 'zh-CN' : 'en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(date)
+})
+
+const releaseStatusLabel = computed(() => {
+  if (!releaseInfo.value) return ''
+  return releaseInfo.value.prerelease ? t('desktop.version.prerelease') : t('desktop.version.stable')
+})
+
+const sortedDownloadOptions = computed(() => {
+  const preferred = preferredDownload.value
+  if (!preferred) return downloadOptions.value
+
+  return [
+    preferred,
+    ...downloadOptions.value.filter((opt) => opt.key !== preferred.key),
+  ]
+})
+
+const handlePrimaryDownload = (event: MouseEvent) => {
+  if (preferredDownloadHref.value) {
+    isDownloadOpen.value = false
+    return
+  }
+
+  event.preventDefault()
+  toggleDownload()
+}
 </script>
 
 <template>
@@ -75,22 +134,65 @@ const downloadOptions: DownloadOption[] = [
       {{ t('desktop.subtitle') }}
     </p>
 
+    <div
+      v-if="releaseInfo || isReleaseInfoLoading"
+      class="inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-[14px] border border-border bg-background/80 px-4 py-2 text-sm text-muted-foreground shadow-none backdrop-blur-sm"
+    >
+      <span class="inline-flex items-center gap-2 font-mono text-[15px] font-medium text-primary">
+        <Icon icon="mdi:tag-outline" class="h-4 w-4 shrink-0" />
+        {{ releaseInfo?.tag || t('desktop.version.loading') }}
+      </span>
+      <span
+        v-if="releaseInfo"
+        class="inline-flex items-center rounded-md border px-1.5 py-0.5 text-[11px] font-medium"
+        :class="releaseInfo.prerelease
+          ? 'border-primary/20 bg-primary/10 text-primary'
+          : 'border-border bg-muted text-muted-foreground'"
+      >
+        {{ releaseStatusLabel }}
+      </span>
+      <span v-if="releasePublishedDate" class="text-xs text-muted-foreground">
+        {{ t('desktop.version.published', { date: releasePublishedDate }) }}
+      </span>
+    </div>
+
     <div class="flex flex-col sm:flex-row gap-3 mt-6">
       <div class="relative" ref="downloadMenuRef">
-        <button
-          @click="toggleDownload"
-          type="button"
-          class="bg-primary hover:bg-primary/90 text-primary-foreground rounded-md px-5 h-11 font-medium flex items-center gap-2 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
-          :aria-expanded="isDownloadOpen"
-          aria-haspopup="menu"
+        <div
+          class="inline-flex h-11 overflow-hidden rounded-md bg-primary text-primary-foreground shadow-none transition-all hover:bg-primary/90 active:scale-95 focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
+          :class="{ 'ring-2 ring-primary/20': isDownloadOpen }"
         >
-          <Download class="w-4 h-4 shrink-0" />
-          <span class="whitespace-nowrap">{{ t('desktop.download') }}</span>
-          <ChevronDown
-            class="w-4 h-4 shrink-0 opacity-80 transition-transform duration-200"
-            :class="{ 'rotate-180': isDownloadOpen }"
-          />
-        </button>
+          <a
+            :href="preferredDownloadHref || undefined"
+            :target="preferredDownloadHref ? '_blank' : undefined"
+            :rel="preferredDownloadHref ? 'noopener noreferrer' : undefined"
+            :aria-disabled="!preferredDownloadHref"
+            @click="handlePrimaryDownload"
+            class="flex h-full items-center gap-2 bg-transparent px-5 font-medium transition-colors focus-visible:outline-none"
+          >
+            <Icon :icon="preferredDownloadIcon" class="w-5 h-5 shrink-0" />
+            <span class="whitespace-nowrap">{{ t('desktop.download') }}</span>
+            <span
+              v-if="preferredDownload"
+              class="inline max-w-[160px] truncate border-l border-primary-foreground/30 pl-2 text-xs text-primary-foreground/80 sm:max-w-[180px]"
+            >
+              {{ t(`desktop.os.${preferredDownload.key}`) }}
+            </span>
+          </a>
+          <button
+            @click="toggleDownload"
+            type="button"
+            class="flex h-full items-center border-l border-primary-foreground/25 bg-transparent px-3 font-medium transition-colors hover:bg-transparent focus-visible:outline-none"
+            :aria-expanded="isDownloadOpen"
+            :aria-label="t('desktop.moreDownloads')"
+            aria-haspopup="menu"
+          >
+            <ChevronDown
+              class="w-4 h-4 shrink-0 opacity-80 transition-transform duration-200"
+              :class="{ 'rotate-180': isDownloadOpen }"
+            />
+          </button>
+        </div>
 
         <Transition
           enter-active-class="transition duration-100 ease-out"
@@ -106,7 +208,7 @@ const downloadOptions: DownloadOption[] = [
             class="absolute top-full left-0 mt-2 w-72 rounded-md border border-border bg-background shadow-lg z-50 overflow-hidden py-1 origin-top-left"
           >
             <a
-              v-for="opt in downloadOptions"
+              v-for="opt in sortedDownloadOptions"
               :key="opt.key"
               :href="opt.href || undefined"
               target="_blank"
@@ -119,6 +221,9 @@ const downloadOptions: DownloadOption[] = [
             >
               <Icon :icon="opt.icon" class="w-5 h-5 shrink-0 text-muted-foreground group-hover:text-foreground" />
               <span class="font-medium">{{ t(`desktop.os.${opt.key}`) }}</span>
+              <span v-if="opt.key === preferredDownloadKey" class="ml-auto text-xs font-medium text-primary">
+                {{ t('desktop.recommended') }}
+              </span>
             </a>
           </div>
         </Transition>

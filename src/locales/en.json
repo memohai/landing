@@ -13,7 +13,16 @@
     "title": "Memoh on your desktop",
     "subtitle": "Run Memoh natively on your computer. Built for macOS, Windows and Linux — install once, work everywhere.",
     "download": "Download",
+    "moreDownloads": "Choose another desktop version",
+    "recommended": "Recommended",
     "docs": "Docs",
+    "version": {
+      "latest": "Latest version",
+      "loading": "Checking",
+      "prerelease": "Pre-release",
+      "published": "Released {date}",
+      "stable": "Stable"
+    },
     "os": {
       "macArm": "macOS (Apple Silicon)",
       "macIntel": "macOS (Intel)",
@@ -30,6 +39,8 @@
     "title": "The Agent Orchestrator",
     "subtitle": "Self-hosted, highly concurrent, zero telemetry. Built for hackers and AI developers.",
     "cta": "Get Started",
+    "desktop": "Desktop App",
+    "desktopHint": "Choose macOS / Windows / Linux",
     "skip": "Skip ⏭"
   },
   "install": {

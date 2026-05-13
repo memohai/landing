@@ -13,7 +13,16 @@
     "title": "Memoh 桌面版",
     "subtitle": "在你的电脑上原生跑起 Memoh。为 macOS、Windows 与 Linux 打造，一次安装，处处可用。",
     "download": "下载",
+    "moreDownloads": "选择其他桌面版本",
+    "recommended": "推荐",
     "docs": "文档",
+    "version": {
+      "latest": "最新版本",
+      "loading": "正在检查",
+      "prerelease": "预发布",
+      "published": "发布于 {date}",
+      "stable": "稳定版"
+    },
     "os": {
       "macArm": "macOS (Apple Silicon)",
       "macIntel": "macOS (Intel)",
@@ -30,6 +39,8 @@
     "title": "智能体平台",
     "subtitle": "私有化部署。高并发。零遥测。专为极客与 AI 开发者打造。",
     "cta": "开始",
+    "desktop": "桌面版",
+    "desktopHint": "选择 macOS / Windows / Linux",
     "skip": "跳过动画 ⏭"
   },
   "install": {
