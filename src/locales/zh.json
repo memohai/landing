@@ -18,7 +18,8 @@
       "macArm": "macOS (Apple Silicon)",
       "macIntel": "macOS (Intel)",
       "win": "Windows (x64)",
-      "linux": "Linux (x64)"
+      "linuxDebAmd64": "Linux .deb (amd64)",
+      "linuxAppImageX86": "Linux AppImage (x86_64)"
     }
   },
   "seo": {

@@ -44,7 +44,7 @@ const toggleDownload = () => {
 }
 
 type DownloadOption = {
-  key: 'macArm' | 'macIntel' | 'win' | 'linux'
+  key: 'macArm' | 'macIntel' | 'win' | 'linuxDebAmd64' | 'linuxAppImageX86'
   icon: string
   href?: string
 }
@@ -53,14 +53,16 @@ const downloadUrls = {
   macArm: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_ARM,
   macIntel: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_INTEL,
   win: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_WINDOWS,
-  linux: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX,
+  linuxDebAmd64: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_DEB_AMD64,
+  linuxAppImageX86: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_APPIMAGE_X86_64,
 }
 
 const downloadOptions: DownloadOption[] = [
   { key: 'macArm', icon: 'mdi:apple', href: downloadUrls.macArm },
   { key: 'macIntel', icon: 'mdi:apple', href: downloadUrls.macIntel },
   { key: 'win', icon: 'mdi:microsoft-windows', href: downloadUrls.win },
-  { key: 'linux', icon: 'mdi:linux', href: downloadUrls.linux },
+  { key: 'linuxDebAmd64', icon: 'mdi:linux', href: downloadUrls.linuxDebAmd64 },
+  { key: 'linuxAppImageX86', icon: 'mdi:linux', href: downloadUrls.linuxAppImageX86 },
 ]
 </script>
 

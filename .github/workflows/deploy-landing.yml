@@ -78,10 +78,11 @@ jobs:
           mac_arm_url="$(asset_url 'mac-arm64.*\.dmg$')"
           mac_intel_url="$(asset_url 'mac-x64.*\.dmg$')"
           windows_url="$(asset_url 'win-x64.*setup.*\.exe$')"
-          linux_url="$(asset_url 'linux.*(x86_64|amd64).*\.AppImage$')"
+          linux_deb_amd64_url="$(asset_url 'linux-amd64.*\.deb$')"
+          linux_appimage_x86_64_url="$(asset_url 'linux-x86_64.*\.AppImage$')"
 
           missing=0
-          for name in release_tag mac_arm_url mac_intel_url windows_url linux_url; do
+          for name in release_tag mac_arm_url mac_intel_url windows_url linux_deb_amd64_url linux_appimage_x86_64_url; do
             if [ -z "${!name}" ]; then
               echo "::error::Missing ${name} in latest Memoh release assets"
               missing=1
@@ -97,7 +98,8 @@ jobs:
             echo "VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_ARM=${mac_arm_url}"
             echo "VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_INTEL=${mac_intel_url}"
             echo "VITE_MEMOH_DESKTOP_DOWNLOAD_WINDOWS=${windows_url}"
-            echo "VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX=${linux_url}"
+            echo "VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_DEB_AMD64=${linux_deb_amd64_url}"
+            echo "VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_APPIMAGE_X86_64=${linux_appimage_x86_64_url}"
           } >> "${GITHUB_ENV}"
       
       - name: Build with Vite
