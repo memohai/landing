@@ -9,6 +9,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>MemohAI - Landing Page</title>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('vueuse-color-scheme');
+          var isDark = saved ? saved === 'dark' : true;
+          if (isDark) document.documentElement.classList.add('dark');
+        } catch (_) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body class="bg-background text-foreground font-sans antialiased selection:bg-primary/20 selection:text-primary">
     <div id="app"></div>
