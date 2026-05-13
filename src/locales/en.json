@@ -11,7 +11,7 @@
       "description": "Download the Memoh desktop app for macOS (Apple Silicon & Intel), Windows, and Linux. Run your Agent OS natively on your computer."
     },
     "title": "Memoh on your desktop",
-    "subtitle": "Run Memoh natively on your computer. Built for macOS, Windows and Linux — install once, work everywhere.",
+    "subtitle": "Run your agent workspace completely on your own computer. Built for macOS, Windows and Linux, with local files and services staying on your machine.",
     "download": "Download",
     "moreDownloads": "Choose another desktop version",
     "recommended": "Recommended",
@@ -32,8 +32,8 @@
     }
   },
   "seo": {
-    "title": "MemohAI - The Agent Orchestrator | Self-hosted & Containerized Isolation",
-    "description": "Memoh is an Agent OS built for hackers and AI developers. Self-hosted, highly concurrent, and zero telemetry. Featuring containerized isolation and long-term memory for secure agent orchestration."
+    "title": "MemohAI - The Agent Orchestrator",
+    "description": "Memoh is a self-hosted agent orchestrator for hackers and AI developers, with container isolation, long-term memory, high concurrency, and zero telemetry."
   },
   "hero": {
     "title": "The Agent Orchestrator",

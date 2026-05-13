@@ -7,9 +7,10 @@ import HeroSection from '../components/HeroSection.vue'
 import InstallModule from '../components/InstallModule.vue'
 import UseCasesGrid from '../components/UseCasesGrid.vue'
 import FeatureGallery from '../components/FeatureGallery.vue'
-import heroImage from '../assets/hero.png'
 
 const { locale, t } = useI18n()
+const siteUrl = 'https://memoh.ai/'
+const socialImage = 'https://memoh.ai/logo.png'
 
 useSeoMeta({
   title: () => t('seo.title'),
@@ -17,11 +18,12 @@ useSeoMeta({
   ogTitle: () => t('seo.title'),
   ogDescription: () => t('seo.description'),
   ogType: 'website',
-  ogUrl: 'https://memoh.ai',
-  ogImage: heroImage,
+  ogUrl: siteUrl,
+  ogImage: socialImage,
   twitterCard: 'summary_large_image',
   twitterTitle: () => t('seo.title'),
   twitterDescription: () => t('seo.description'),
+  twitterImage: socialImage,
 })
 
 useHead({
@@ -31,7 +33,7 @@ useHead({
   link: [
     {
       rel: 'canonical',
-      href: 'https://memoh.ai',
+      href: siteUrl,
     },
     {
       rel: 'alternate',

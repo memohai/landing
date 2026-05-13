@@ -17,6 +17,8 @@ import {
 import { fetchDesktopReleaseInfo, type DesktopReleaseInfo } from '../lib/desktopRelease'
 
 const { locale, t } = useI18n()
+const desktopUrl = 'https://memoh.ai/desktop'
+const socialImage = 'https://memoh.ai/logo.png'
 
 useSeoMeta({
   title: () => t('desktop.seo.title'),
@@ -24,10 +26,12 @@ useSeoMeta({
   ogTitle: () => t('desktop.seo.title'),
   ogDescription: () => t('desktop.seo.description'),
   ogType: 'website',
-  ogUrl: 'https://memoh.ai/desktop',
+  ogUrl: desktopUrl,
+  ogImage: socialImage,
   twitterCard: 'summary_large_image',
   twitterTitle: () => t('desktop.seo.title'),
   twitterDescription: () => t('desktop.seo.description'),
+  twitterImage: socialImage,
 })
 
 useHead({
@@ -35,10 +39,28 @@ useHead({
     lang: computed(() => locale.value),
   },
   link: [
-    { rel: 'canonical', href: 'https://memoh.ai/desktop' },
-    { rel: 'alternate', hreflang: 'en', href: 'https://memoh.ai/desktop' },
-    { rel: 'alternate', hreflang: 'zh', href: 'https://memoh.ai/desktop' },
-    { rel: 'alternate', hreflang: 'x-default', href: 'https://memoh.ai/desktop' },
+    { rel: 'canonical', href: desktopUrl },
+    { rel: 'alternate', hreflang: 'en', href: desktopUrl },
+    { rel: 'alternate', hreflang: 'zh', href: desktopUrl },
+    { rel: 'alternate', hreflang: 'x-default', href: desktopUrl },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: computed(() => JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Memoh Desktop',
+        operatingSystem: 'macOS, Windows, Linux',
+        applicationCategory: 'DeveloperApplication',
+        downloadUrl: desktopUrl,
+        description: t('desktop.seo.description'),
+        author: {
+          '@type': 'Organization',
+          name: 'MemohAI',
+        },
+      })),
+    },
   ],
 })
 

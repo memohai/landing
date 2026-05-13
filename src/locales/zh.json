@@ -11,7 +11,7 @@
       "description": "下载 Memoh 桌面应用，支持 macOS (Apple Silicon 与 Intel)、Windows 与 Linux，让你的智能体平台原生跑在自己的电脑上。"
     },
     "title": "Memoh 桌面版",
-    "subtitle": "在你的电脑上原生跑起 Memoh。为 macOS、Windows 与 Linux 打造，一次安装，处处可用。",
+    "subtitle": "让智能体工作区完全在你的电脑上本地运行。为 macOS、Windows 与 Linux 打造，本地文件与服务留在本机。",
     "download": "下载",
     "moreDownloads": "选择其他桌面版本",
     "recommended": "推荐",
@@ -32,8 +32,8 @@
     }
   },
   "seo": {
-    "title": "MemohAI - 智能体平台 | 私有化部署 & 容器化隔离",
-    "description": "Memoh 是一款为极客与 AI 开发者打造的智能体平台。私有化部署、零遥测保护，提供容器化隔离与持久记忆架构，让你安全地跑起自己的智能体集群。"
+    "title": "MemohAI - 智能体平台",
+    "description": "Memoh 是一款为极客与 AI 开发者打造的私有化智能体平台，支持容器隔离、长期记忆、高并发与零遥测。"
   },
   "hero": {
     "title": "智能体平台",
