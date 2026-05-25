@@ -22,6 +22,8 @@ const isMemohNet = computed(() => {
 
 const memohNetAddress = 'Cloud Technology Building, No. 50 Liuxin 1st Road, Nanshan District, Shenzhen'
 const footerAddress = computed(() => (isMemohNet.value ? memohNetAddress : t('footer.address')))
+const miitBeianUrl = 'https://beian.miit.gov.cn/'
+const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 </script>
 
 <template>
@@ -44,11 +46,13 @@ const footerAddress = computed(() => (isMemohNet.value ? memohNetAddress : t('fo
             v-if="isMemohNet"
             class="mt-1.5 inline-flex items-center gap-1.5 rounded-md border border-border/40 bg-muted/20 px-2 py-1 text-[10px] text-muted-foreground/75 leading-none whitespace-nowrap"
           >
-            <span>粤ICP备2020082274号</span>
+            <a :href="miitBeianUrl" target="_blank" rel="noopener noreferrer" class="hover:text-muted-foreground transition-colors">
+              粤ICP备2020082274号
+            </a>
             <span aria-hidden="true" class="text-muted-foreground/45">｜</span>
-            <span>粤公网安备 44030902003142号</span>
-            <span aria-hidden="true" class="text-muted-foreground/45">｜</span>
-            <span>增值电信业务经营许可证 B1-20214707</span>
+            <a :href="telecomLicenseUrl" target="_blank" rel="noopener noreferrer" class="hover:text-muted-foreground transition-colors">
+              增值电信业务经营许可证 B1-20214707
+            </a>
           </div>
         </div>
         <div class="flex gap-6">
