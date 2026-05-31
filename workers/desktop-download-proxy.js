@@ -3,26 +3,28 @@ const DOWNLOAD_PREFIX = '/downloads/desktop'
 const LATEST_TTL_SECONDS = 300
 const ASSET_TTL_SECONDS = 60 * 60 * 24 * 30
 
+const assetPattern = (slug) => new RegExp(`^Memoh-Local-[0-9][0-9A-Za-z.-]*-${slug.replaceAll('.', '\\.')}$`, 'i')
+
 const ASSETS = {
   'mac-arm64.dmg': {
     key: 'macArm',
-    pattern: /mac-arm64.*\.dmg$/i,
+    pattern: assetPattern('mac-arm64.dmg'),
   },
   'mac-x64.dmg': {
     key: 'macIntel',
-    pattern: /mac-x64.*\.dmg$/i,
+    pattern: assetPattern('mac-x64.dmg'),
   },
   'win-x64-setup.exe': {
     key: 'win',
-    pattern: /win-x64.*setup.*\.exe$/i,
+    pattern: assetPattern('win-x64-setup.exe'),
   },
   'linux-amd64.deb': {
     key: 'linuxDebAmd64',
-    pattern: /linux-amd64.*\.deb$/i,
+    pattern: assetPattern('linux-amd64.deb'),
   },
   'linux-x86_64.AppImage': {
     key: 'linuxAppImageX86',
-    pattern: /linux-x86_64.*\.AppImage$/i,
+    pattern: assetPattern('linux-x86_64.AppImage'),
   },
 }
 
@@ -31,12 +33,12 @@ const sanitizeFileNamePart = (value) => {
 }
 
 const downloadFileName = (tag, slug) => {
-  return `Memoh-${sanitizeFileNamePart(tag)}-${sanitizeFileNamePart(slug)}`
+  return `Memoh-Local-${sanitizeFileNamePart(tag)}-${sanitizeFileNamePart(slug)}`
 }
 
 const githubAssetFileName = (tag, slug) => {
   const version = tag.replace(/^v/i, '')
-  return `Memoh-Desktop-${version}-${slug}`
+  return `Memoh-Local-${version}-${slug}`
 }
 
 const githubAssetUrl = (repo, tag, slug) => {
@@ -144,8 +146,10 @@ const buildManifest = (requestUrl, release, repo) => {
   const assets = {}
 
   for (const [slug, definition] of Object.entries(ASSETS)) {
-    const asset = release.assets?.find((candidate) => definition.pattern.test(candidate.name))
-    if (!asset) continue
+    const match = findAsset(release, slug)
+    if (!match) continue
+
+    const { asset } = match
 
     assets[definition.key] = {
       path: `${requestUrl.origin}${DOWNLOAD_PREFIX}/${encodeURIComponent(release.tag_name)}/${slug}`,
