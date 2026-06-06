@@ -23,11 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
-# Easter egg raw assets & generation scripts (local only)
+# Easter egg assets & generation scripts (local only, serve via CDN in prod)
 public/gacha/
 public/gacha2/
 public/egg-still.jpg
 public/egg-still.png
+public/egg-*.mp4
+public/art-egg.png
 scripts/
 
 # AI Configuration & Design Specs
