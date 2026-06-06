@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 
 // ── 主随机池（7种）──────────────────────────────────────
 const MAIN_CLIPS = [
@@ -19,6 +19,11 @@ const BOARD_SRC   = '/egg-e3.mp4'   // E3: 黑板变 Memoh
 const GIFT_SRC    = '/egg-e4.mp4'   // E4: 终极彩蛋叼鱼
 
 const debug = computed(() => new URLSearchParams(location.search).has('debug'))
+
+// ── 懒加载：只有滚到彩蛋区域附近才初始化视频 ────────────
+const initialized = ref(false)
+const sectionRef = ref<HTMLElement | null>(null)
+let observer: IntersectionObserver | null = null
 
 // ── state ─────────────────────────────────────────────
 const videoRefs   = ref<Record<string, HTMLVideoElement>>({})
@@ -134,68 +139,80 @@ function onBoardClick() {
 }
 
 // ── preload ────────────────────────────────────────────
-onMounted(() => {
-  // force frame 0 on the still video
+function initVideos() {
+  if (initialized.value) return
+  initialized.value = true
   const still = videoRefs.value['still']
   if (still) still.currentTime = 0
-
-  // preload special clips in background
   ;[STARTLE_SRC, BOARD_SRC, GIFT_SRC].forEach(src => {
     const tmp = document.createElement('video')
     tmp.src = src; tmp.preload = 'auto'; tmp.muted = true
     tmp.style.cssText = 'display:none;position:fixed;pointer-events:none'
     document.body.appendChild(tmp)
   })
+}
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) { initVideos(); observer?.disconnect(); observer = null }
+    },
+    { rootMargin: '0px 0px 100% 0px' }
+  )
+  if (sectionRef.value) observer.observe(sectionRef.value)
 })
+
+onUnmounted(() => { observer?.disconnect() })
 </script>
 
 <template>
-  <section class="egg select-none">
-    <!-- 静止底层 -->
+  <section ref="sectionRef" class="egg select-none">
+    <!-- 静止底层：未初始化时也显示，用 poster 兜底背景色 -->
     <video
       :ref="(el) => setRef('still', el)"
-      src="/egg-a1.mp4"
+      :src="initialized ? '/egg-a1.mp4' : undefined"
+      :preload="initialized ? 'auto' : 'none'"
       class="egg-video"
-      muted playsinline preload="auto" aria-hidden="true"
+      muted playsinline aria-hidden="true"
     />
 
-    <!-- 主随机 clips -->
+    <!-- 主随机 clips：懒加载，未初始化不设 src -->
     <video
       v-for="clip in MAIN_CLIPS"
       :key="clip.id"
-      :src="clip.src"
+      :src="initialized ? clip.src : undefined"
+      :preload="initialized ? 'auto' : 'none'"
       :ref="(el) => setRef(clip.id, el)"
       class="egg-video clip-video"
       :class="{ active: activeClip === clip.id }"
-      muted playsinline preload="auto" aria-hidden="true"
+      muted playsinline aria-hidden="true"
       @ended="onClipEnded(clip.id)"
     />
 
-    <!-- E1 炸毛 -->
+    <!-- E1/E3/E4：src 由 initVideos 里的隐藏元素预热，这里只在 active 时有 src -->
     <video
       :ref="(el) => setRef('e1', el)"
-      :src="STARTLE_SRC"
+      :src="initialized ? STARTLE_SRC : undefined"
+      :preload="initialized ? 'auto' : 'none'"
       class="egg-video clip-video"
       :class="{ active: activeClip === 'e1' }"
-      muted playsinline preload="auto" aria-hidden="true"
+      muted playsinline aria-hidden="true"
     />
-
-    <!-- E3 黑板 -->
     <video
       :ref="(el) => setRef('e3', el)"
-      :src="BOARD_SRC"
+      :src="initialized ? BOARD_SRC : undefined"
+      :preload="initialized ? 'auto' : 'none'"
       class="egg-video clip-video"
       :class="{ active: activeClip === 'e3' }"
-      muted playsinline preload="auto" aria-hidden="true"
+      muted playsinline aria-hidden="true"
     />
-
-    <!-- E4 终极彩蛋 -->
     <video
       :ref="(el) => setRef('e4', el)"
-      :src="GIFT_SRC"
+      :src="initialized ? GIFT_SRC : undefined"
+      :preload="initialized ? 'auto' : 'none'"
       class="egg-video clip-video"
       :class="{ active: activeClip === 'e4' }"
-      muted playsinline preload="auto" aria-hidden="true"
+      muted playsinline aria-hidden="true"
     />
 
     <!-- 猫的点击热区 -->

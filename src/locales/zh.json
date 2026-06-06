@@ -36,8 +36,8 @@
     "description": "每个 Agent 都拥有一台云端电脑，有桌面、有文件、有网络，一直开着，一直在"
   },
   "hero": {
-    "title": "陪着你的 Ta",
-    "subtitle": "Memoh 是多 Agent 平台，每个 Ta 都住在自己的电脑里\n在这里一直等着你",
+    "title": "陪着你的%TA%",
+    "subtitle": "Memoh 是多 Agent 平台，每个%TA%都住在自己的电脑里\n在这里一直等着你",
     "ctaPrimary": "开始使用",
     "ctaSecondary": "GitHub",
     "cta": "开始",
@@ -46,31 +46,31 @@
     "skip": "跳过动画 ⏭"
   },
   "s1": {
-    "title": "一台属于 Ta 的电脑",
+    "title": "一台属于%TA%的电脑",
     "subtitle": "每个 Agent 都有自己的桌面、文件和网络\n不是聊天框，是一台真正开着的电脑",
     "c1": {
-      "title": "Ta 自己的桌面",
-      "desc": "完整的图形界面\nTa 在里面浏览、工作——不只是一个对话框"
+      "title": "%TA%自己的桌面",
+      "desc": "完整的图形界面\n%TA%在里面浏览、工作——不只是一个对话框"
     },
     "c2": {
-      "title": "Ta 自己的文件",
-      "desc": "一套属于 Agent 的持久文件系统\nTa 的笔记、Ta 的下载、Ta 的工作区"
+      "title": "%TA%自己的文件",
+      "desc": "一套属于 Agent 的持久文件系统\n%TA%的笔记、%TA%的下载、%TA%的工作区"
     },
     "c3": {
-      "title": "Ta 自己的网络",
-      "desc": "独立的网络环境\nTa 按自己的节奏上网，获取需要的东西"
+      "title": "%TA%自己的网络",
+      "desc": "独立的网络环境\n%TA%按自己的节奏上网，获取需要的东西"
     }
   },
   "s2": {
-    "title": "你不在的时候，Ta 也在",
-    "subtitle": "Ta 跑在云端，你的电脑关了，Ta 没关\n有事的时候，Ta 会来找你",
+    "title": "你不在的时候，%TA%也在",
+    "subtitle": "%TA%跑在云端，你的电脑关了，%TA%没关\n有事的时候，%TA%会来找你",
     "c1": {
       "title": "自己会跑",
       "desc": "定时任务和周期自检\n不需要你去触发"
     },
     "c2": {
       "title": "主动找你",
-      "desc": "有重要的事\nTa 会先发消息给你"
+      "desc": "有重要的事\n%TA%会先发消息给你"
     },
     "c3": {
       "title": "接着上次聊的",
@@ -78,8 +78,8 @@
     }
   },
   "s3": {
-    "title": "在哪都能找到 Ta",
-    "subtitle": "Telegram、Discord、微信、飞书、QQ、邮件、Web\n一个 Agent，所有渠道"
+    "title": "在哪都能找到%TA%",
+    "subtitle": "一个 Agent，所有渠道"
   },
   "cta_bottom": {
     "title": "试试 Memoh",
@@ -91,7 +91,7 @@
     "address": "BUKIT BATOK CRESCENT, WCEGA TOWER, #17-75, Singapore 658065",
     "privacy": "隐私政策",
     "terms": "服务条款",
-    "tagline": "多 Agent 平台\n每个 Ta 都有自己的电脑，一直在",
+    "tagline": "多 Agent 平台\n每个%TA%都有自己的电脑，一直在",
     "getStarted": "开始使用",
     "product": "产品",
     "resources": "资源",

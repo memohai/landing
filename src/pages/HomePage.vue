@@ -4,8 +4,10 @@ import { ArrowRight, ImageIcon } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useHead, useSeoMeta } from '@unhead/vue'
 import HeroSection from '../components/HeroSection.vue'
+import { useTa } from '../composables/useTa'
 
 const { locale, t } = useI18n()
+const { th } = useTa()
 const siteUrl = 'https://memoh.ai/'
 const socialImage = 'https://memoh.ai/logo.png'
 
@@ -68,6 +70,15 @@ const s3Channels = [
   { name: 'WeChat', hint: '微信对话截图' },
   { name: 'Web', hint: 'Web UI 聊天截图' },
 ]
+
+const moreLogos = [
+  { name: 'WeChat',   src: '/brands/wechat.svg' },
+  { name: 'Telegram', src: '/brands/telegram.svg' },
+  { name: 'Discord',  src: '/brands/discord.svg' },
+  { name: 'QQ',       src: '/brands/qq.svg' },
+  { name: 'Gmail',    src: '/brands/gmail.svg' },
+  { name: 'Slack',    src: '/brands/slack.svg' },
+]
 </script>
 
 <template>
@@ -76,29 +87,26 @@ const s3Channels = [
 
   <!-- ═══ SCREEN 1 — 一台属于 Ta 的电脑 (图片大卡片 · railway) ═══ -->
   <section class="w-full px-4 md:px-6 pt-[40px] md:pt-[52px] pb-[8px] md:pb-[10px]">
-    <div class="w-full relative rounded-3xl overflow-hidden border border-white/10">
-      <img src="/art-railway.png" alt="" class="absolute inset-0 w-full h-full object-cover object-[35%_100%]" />
+    <div class="w-full relative rounded-3xl overflow-hidden border border-white/10" style="min-height:clamp(520px,72vh,820px)">
+      <!-- 底部锚定：图片宽度撑满，高度自然，底部固定，顶部溢出被裁 -->
+      <img src="/art-railway.png" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:38% 100%" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 via-55% to-transparent" />
       <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
           <div class="flex flex-col gap-3 max-w-[600px]">
-            <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-white">
-              {{ $t('s1.title') }}
-            </h2>
-            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line">
-              {{ $t('s1.subtitle') }}
-            </p>
+            <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-white" v-html="th('s1.title')" />
+            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line" v-html="th('s1.subtitle')" />
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <div v-for="(proof, i) in s1Proofs" :key="proof.key" class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md p-4 md:p-5">
+            <div v-for="(proof, i) in s1Proofs" :key="proof.key" class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 backdrop-blur-sm p-4 md:p-5">
               <div class="flex flex-col gap-0.5 px-1">
-                <h3 class="font-medium text-base text-white">{{ $t(`s1.c${i+1}.title`) }}</h3>
-                <p class="text-sm text-white/65 leading-snug whitespace-pre-line">{{ $t(`s1.c${i+1}.desc`) }}</p>
+                <h3 class="font-medium text-base text-white" v-html="th(`s1.c${i+1}.title`)" />
+                <p class="text-sm text-white/65 leading-snug whitespace-pre-line" v-html="th(`s1.c${i+1}.desc`)" />
               </div>
-              <div class="rounded-xl border border-white/10 bg-black/40 aspect-[4/5] flex flex-col items-center justify-center gap-2">
-                <ImageIcon :size="24" class="text-white/20" />
-                <span class="text-white/30 text-xs text-center px-4 whitespace-pre-line">{{ proof.hint }}</span>
+              <div class="rounded-xl border border-white/8 bg-[#2a2a2e] aspect-[4/5] flex flex-col items-center justify-center gap-2">
+                <ImageIcon :size="24" class="text-white/30" />
+                <span class="text-white/45 text-xs text-center px-4 whitespace-pre-line">{{ proof.hint }}</span>
               </div>
             </div>
           </div>
@@ -112,29 +120,26 @@ const s3Channels = [
 
   <!-- ═══ SCREEN 2 — 你不在的时候 Ta 也在 (图片大卡片 · station) ═══ -->
   <section class="w-full px-4 md:px-6 py-[8px] md:py-[10px]">
-    <div class="w-full relative rounded-3xl overflow-hidden border border-white/10">
-      <img src="/art-station.png" alt="" class="absolute inset-0 w-full h-full object-cover scale-[1.3] origin-[57%_90%]" />
+    <div class="w-full relative rounded-3xl overflow-hidden border border-white/10" style="min-height:clamp(520px,72vh,820px)">
+      <!-- 底部锚定：灯亭在图片下部，底部固定确保可见 -->
+      <img src="/art-station.png" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:57% 100%" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 via-55% to-transparent" />
       <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
           <div class="flex flex-col gap-3 max-w-[600px]">
-            <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-white">
-              {{ $t('s2.title') }}
-            </h2>
-            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line">
-              {{ $t('s2.subtitle') }}
-            </p>
+            <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-white" v-html="th('s2.title')" />
+            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line" v-html="th('s2.subtitle')" />
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <div v-for="(proof, i) in s2Proofs" :key="proof.key" class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md p-4 md:p-5">
+            <div v-for="(proof, i) in s2Proofs" :key="proof.key" class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 backdrop-blur-sm p-4 md:p-5">
               <div class="flex flex-col gap-0.5 px-1">
-                <h3 class="font-medium text-base text-white">{{ $t(`s2.c${i+1}.title`) }}</h3>
-                <p class="text-sm text-white/65 leading-snug whitespace-pre-line">{{ $t(`s2.c${i+1}.desc`) }}</p>
+                <h3 class="font-medium text-base text-white" v-html="th(`s2.c${i+1}.title`)" />
+                <p class="text-sm text-white/65 leading-snug whitespace-pre-line" v-html="th(`s2.c${i+1}.desc`)" />
               </div>
-              <div class="rounded-xl border border-white/10 bg-black/40 aspect-[4/5] flex flex-col items-center justify-center gap-2">
-                <ImageIcon :size="24" class="text-white/20" />
-                <span class="text-white/30 text-xs text-center px-4 whitespace-pre-line">{{ proof.hint }}</span>
+              <div class="rounded-xl border border-white/8 bg-[#2a2a2e] aspect-[4/5] flex flex-col items-center justify-center gap-2">
+                <ImageIcon :size="24" class="text-white/30" />
+                <span class="text-white/45 text-xs text-center px-4 whitespace-pre-line">{{ proof.hint }}</span>
               </div>
             </div>
           </div>
@@ -148,25 +153,22 @@ const s3Channels = [
 
   <!-- ═══ SCREEN 3 — 在哪都能找到 Ta (图片大卡片 · cafe) ═══ -->
   <section class="w-full px-4 md:px-6 py-[8px] md:py-[10px]">
-    <div class="w-full relative rounded-3xl overflow-hidden border border-white/10">
-      <img src="/art-cafe.png" alt="" class="absolute inset-0 w-full h-full object-cover object-bottom scale-[1.25] origin-bottom" />
+    <div class="w-full relative rounded-3xl overflow-hidden border border-white/10" style="min-height:clamp(520px,72vh,820px)">
+      <!-- 底部锚定：小猫在图片底部，底部固定确保可见 -->
+      <img src="/art-cafe.png" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:62% 100%" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 via-55% to-transparent" />
       <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
           <div class="flex flex-col gap-3 max-w-[600px]">
-            <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-white">
-              {{ $t('s3.title') }}
-            </h2>
-            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line">
-              {{ $t('s3.subtitle') }}
-            </p>
+            <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-white" v-html="th('s3.title')" />
+            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line" v-html="th('s3.subtitle')" />
           </div>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <div v-for="ch in s3Channels" :key="ch.name" class="flex flex-col gap-0 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
-              <div class="aspect-[3/4] bg-white/[0.04] flex flex-col items-center justify-center gap-2">
-                <ImageIcon :size="20" class="text-white/20" />
-                <span class="text-white/30 text-[10px] text-center px-2">{{ ch.hint }}</span>
+            <div v-for="ch in s3Channels" :key="ch.name" class="flex flex-col gap-0 rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm overflow-hidden">
+              <div class="aspect-[3/4] bg-[#2a2a2e] flex flex-col items-center justify-center gap-2">
+                <ImageIcon :size="20" class="text-white/30" />
+                <span class="text-white/45 text-[10px] text-center px-2">{{ ch.hint }}</span>
               </div>
               <div class="px-3 py-2.5 border-t border-white/10">
                 <span class="text-xs font-medium text-white">{{ ch.name }}</span>
@@ -174,8 +176,17 @@ const s3Channels = [
             </div>
           </div>
 
+          <!-- And more · logo strip -->
+          <div class="flex flex-col gap-3 pb-2">
+            <p class="text-base text-white font-medium leading-snug">{{ locale === 'zh' ? '以及更多平台' : 'And more' }}</p>
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+              <img v-for="logo in moreLogos" :key="logo.name" :src="logo.src" :alt="logo.name"
+                class="h-6 w-auto" />
+            </div>
+          </div>
+
           <!-- 留白让图片下部的小猫露出 -->
-          <div class="h-[120px] md:h-[170px]" />
+          <div class="h-[60px] md:h-[90px]" />
         </div>
       </div>
     </div>

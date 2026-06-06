@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
+import { useTa } from './composables/useTa'
 import { useRoute } from 'vue-router'
 import { useDark } from '@vueuse/core'
 import { MapPin, Github, Twitter } from 'lucide-vue-next'
@@ -9,6 +10,8 @@ import TopBar from './components/TopBar.vue'
 import EasterEgg from './components/EasterEgg.vue'
 
 const { t } = useI18n()
+const { th } = useTa()
+
 const route = useRoute()
 const isDark = useDark({ initialValue: 'dark' })
 
@@ -59,7 +62,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain" />
               <span class="font-bold text-lg tracking-tight text-foreground">Memoh</span>
             </div>
-            <p class="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{{ t('footer.tagline') }}</p>
+            <p class="text-sm text-muted-foreground leading-relaxed whitespace-pre-line" v-html="th('footer.tagline')" />
             <div class="flex items-center gap-2">
               <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
@@ -116,7 +119,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
         </div>
         </footer>
       </div>
-      <EasterEgg v-if="isHomeRoute" class="egg-snap" />
+      <EasterEgg v-if="isHomeRoute" />
     </div>
   </div>
 </template>
@@ -134,23 +137,22 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: auto;
-  scroll-snap-type: y proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  will-change: scroll-position;
+  transform: translateZ(0);
+}
+.home-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .home-content {
   min-height: 100%;
-  scroll-snap-align: end;
-  scroll-snap-stop: always;
 }
 
 .home-gradient {
   background: linear-gradient(to bottom, #0c0c14 0%, #0c0c14 48%, #09090b 100%);
 }
 
-.egg-snap {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
 </style>
