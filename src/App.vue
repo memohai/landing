@@ -136,7 +136,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: auto;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
 }
 
 .home-content {

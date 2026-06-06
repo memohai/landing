@@ -13,8 +13,10 @@ import heroShot from '../assets/hero-shot.png'
         :src="sunsetBg"
         alt=""
         aria-hidden="true"
-        class="absolute inset-0 w-full h-full object-cover object-center"
+        class="hero-sunset absolute inset-0 w-full h-full object-cover object-center"
       />
+      <!-- Warm wash pulls down the harsh magenta in the sunset sky -->
+      <div class="hero-sunset-wash absolute inset-0 pointer-events-none" aria-hidden="true"></div>
       <!-- Scrims: nav darkening and bottom fade into the page -->
       <div class="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/10"></div>
       <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-background"></div>
@@ -63,6 +65,21 @@ import heroShot from '../assets/hero-shot.png'
 </template>
 
 <style scoped>
+/* Tame the sunset sky: less magenta punch, slightly warmer/neutral. */
+.hero-sunset {
+  filter: saturate(0.82) hue-rotate(-8deg) brightness(0.97);
+}
+
+.hero-sunset-wash {
+  background: linear-gradient(
+    to bottom,
+    rgb(42 28 18 / 0.14),
+    rgb(28 22 18 / 0.08) 45%,
+    transparent 72%
+  );
+  mix-blend-mode: soft-light;
+}
+
 /* Adapted from @memohai/ui button contract bench (primary hover sheen + micro-scale).
    Shape kept as a pill instead of the library's rounded-lg. */
 .hero-btn {
