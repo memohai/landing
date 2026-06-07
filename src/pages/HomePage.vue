@@ -89,7 +89,7 @@ const moreLogos = [
   <section class="w-full px-4 md:px-6 pt-[40px] md:pt-[52px] pb-[8px] md:pb-[10px]">
     <div class="w-full relative rounded-3xl overflow-hidden border border-white/10" style="min-height:clamp(520px,72vh,820px)">
       <!-- 底部锚定：图片宽度撑满，高度自然，底部固定，顶部溢出被裁 -->
-      <img src="/art-railway.png" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:38% 100%" />
+      <img src="/art-railway.webp" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:38% 100%" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 via-55% to-transparent" />
       <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
@@ -122,7 +122,7 @@ const moreLogos = [
   <section class="w-full px-4 md:px-6 py-[8px] md:py-[10px]">
     <div class="w-full relative rounded-3xl overflow-hidden border border-white/10" style="min-height:clamp(520px,72vh,820px)">
       <!-- 底部锚定：灯亭在图片下部，底部固定确保可见 -->
-      <img src="/art-station.png" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:57% 100%" />
+      <img src="/art-station.webp" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:57% 100%" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 via-55% to-transparent" />
       <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
@@ -155,7 +155,7 @@ const moreLogos = [
   <section class="w-full px-4 md:px-6 py-[8px] md:py-[10px]">
     <div class="w-full relative rounded-3xl overflow-hidden border border-white/10" style="min-height:clamp(520px,72vh,820px)">
       <!-- 底部锚定：小猫在图片底部，底部固定确保可见 -->
-      <img src="/art-cafe.png" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:62% 100%" />
+      <img src="/art-cafe.webp" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:62% 100%" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 via-55% to-transparent" />
       <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">

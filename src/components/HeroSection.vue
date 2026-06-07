@@ -2,8 +2,8 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ArrowRight, Github } from 'lucide-vue-next'
-import sunsetBg from '../assets/sunset.png'
-import heroShot from '../assets/hero-shot.png'
+import sunsetBg from '../assets/sunset.webp'
+import heroShot from '../assets/hero-shot.webp'
 import { useTa } from '../composables/useTa'
 
 const { th } = useTa()

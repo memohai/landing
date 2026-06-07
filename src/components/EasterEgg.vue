@@ -3,27 +3,24 @@ import { ref, onMounted, computed, onUnmounted } from 'vue'
 
 // ── 主随机池（7种）──────────────────────────────────────
 const MAIN_CLIPS = [
-  { id: 'a1', src: '/egg-a1.mp4', weight: 10, group: 1 },   // old-frame，待重拍
-  { id: 'a2', src: '/egg-a2.mp4', weight: 10, group: 1 },   // old-frame，待重拍
-  { id: 'b1', src: '/egg-b1.mp4', weight: 15, group: 2 },
-  { id: 'b2', src: '/egg-b2.mp4', weight: 15, group: 2 },
-  { id: 'c1', src: '/egg-c1.mp4', weight: 15, group: 1 },
-  { id: 'd1', src: '/egg-d1.mp4', weight: 15, group: 2 },
-  { id: 'd2', src: '/egg-d2.mp4', weight: 15, group: 2 },
+  { id: 'a1', src: '/egg/a1.mp4', weight: 10, group: 1 },
+  { id: 'a2', src: '/egg/a2.mp4', weight: 10, group: 1 },
+  { id: 'b1', src: '/egg/b1.mp4', weight: 15, group: 2 },
+  { id: 'b2', src: '/egg/b2.mp4', weight: 15, group: 2 },
+  { id: 'c1', src: '/egg/c1.mp4', weight: 15, group: 1 },
+  { id: 'd1', src: '/egg/d1.mp4', weight: 15, group: 2 },
+  { id: 'd2', src: '/egg/d2.mp4', weight: 15, group: 2 },
 ]
 const ALL_IDS = new Set(MAIN_CLIPS.map(c => c.id))
 
-// 按源时长分级的播放倍速：让每个视频实际播放节奏接近（~3-4s）
-// 源时长 a1/a2=4 b1/b2=8 c1=4 d1=6 d2=5 e1=4 e3=6 e4=10
-const RATE: Record<string, number> = {
-  a1: 1.5, a2: 1.5, b1: 2.2, b2: 2.2, c1: 1.5,
-  d1: 1.8, d2: 1.6, e1: 1.5, e3: 1.8, e4: 1.8,
-}
+// 视频已在 public/egg/ 里「预加速」压制（各自倍速烧进文件），网页按 1.0 播放即可
+// 预加速倍速备忘：a1/a2/c1/e1=1.5  b1/b2=2.2  d1/e3=1.8  d2=1.6  e4=1.8
+const PLAYBACK_RATE = 1.0
 
 // ── 特殊视频 ───────────────────────────────────────────
-const STARTLE_SRC = '/egg-e1.mp4'   // E1: 快速连点炸毛
-const BOARD_SRC   = '/egg-e3.mp4'   // E3: 黑板变 Memoh
-const GIFT_SRC    = '/egg-e4.mp4'   // E4: 终极彩蛋叼鱼
+const STARTLE_SRC = '/egg/e1.mp4'   // E1: 快速连点炸毛
+const BOARD_SRC   = '/egg/e3.mp4'   // E3: 黑板变 Memoh
+const GIFT_SRC    = '/egg/e4.mp4'   // E4: 终极彩蛋叼鱼
 
 const debug = computed(() => new URLSearchParams(location.search).has('debug'))
 
@@ -94,7 +91,7 @@ function startClip(key: string, onEnd?: () => void) {
   if (!v) return
   activeClip.value = key
   v.currentTime = 0
-  v.playbackRate = RATE[key] ?? 1.5
+  v.playbackRate = PLAYBACK_RATE
   v.play()
   if (onEnd) v.addEventListener('ended', onEnd, { once: true })
 }
@@ -192,10 +189,10 @@ onUnmounted(() => { observer?.disconnect() })
 
 <template>
   <section ref="sectionRef" class="egg select-none">
-    <!-- 静止底层：用 video model 输出的真实第0帧（egg-poster.png，从 b1 提取），
-         不能用原始输入图 art-egg-1080p.png，否则切到视频会跳帧 -->
+    <!-- 静止底层：用最终压缩视频 b1 的真实第0帧（egg/poster.png），
+         必须取自最终文件，否则切到视频会跳帧 -->
     <img
-      src="/egg-poster.png"
+      src="/egg/poster.webp"
       class="egg-video"
       aria-hidden="true"
       alt=""
