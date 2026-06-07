@@ -15,13 +15,12 @@ const { th } = useTa()
 const route = useRoute()
 const isDark = useDark({ initialValue: 'dark' })
 
-const isDesktopRoute = computed(() => route.path.startsWith('/desktop'))
+const isDownloadRoute = computed(() => route.path.startsWith('/download'))
 const isHomeRoute = computed(() => route.path === '/')
 
 watchEffect(() => {
   if (isHomeRoute.value) isDark.value = true
 })
-const brandSuffix = computed(() => (isDesktopRoute.value ? 'Desktop' : ''))
 
 const isMemohNet = computed(() => {
   if (typeof window === 'undefined') {
@@ -39,8 +38,8 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 </script>
 
 <template>
-  <div class="min-h-screen font-sans overflow-x-hidden" :class="{ 'home-shell': isHomeRoute }">
-    <BackgroundCanvas v-if="!isHomeRoute" />
+  <div class="min-h-screen font-sans overflow-x-hidden" :class="{ 'home-shell': isHomeRoute, 'download-shell': isDownloadRoute }">
+    <BackgroundCanvas v-if="!isHomeRoute && !isDownloadRoute" />
 
     <div
       class="relative z-10 w-full"
@@ -50,7 +49,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
         class="w-full flex flex-col items-center"
         :class="{ 'home-gradient home-content': isHomeRoute }"
       >
-        <TopBar :brand-suffix="brandSuffix" :hide-nav="isDesktopRoute" :overlay="isHomeRoute" :hide-theme-toggle="isHomeRoute" />
+        <TopBar :overlay="isHomeRoute" :hide-theme-toggle="isHomeRoute" />
 
         <RouterView />
 
@@ -79,7 +78,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-12">
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.product') }}</span>
-              <router-link to="/desktop" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.desktop') }}</router-link>
+              <router-link to="/download" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.download') }}</router-link>
               <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.supermarket') }}</a>
             </div>
             <div class="flex flex-col gap-3">
@@ -131,6 +130,21 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   height: 100vh;
   overflow: hidden;
   background: #09090b;
+}
+
+/* Download page: flat near-black (the calm tail of the home gradient), no
+   cursor glow — keeps the platform grid the sole focus. Dark-scoped so light
+   mode still falls back to the normal page background. Re-point --background to
+   the same near-black so the sticky top bar and any bg-background surfaces stay
+   unified instead of showing the slightly bluer #0c0c14. */
+.dark .download-shell {
+  background: #09090b;
+  /* Re-point BOTH the raw token and the Tailwind-resolved --color-background:
+     `--color-background: var(--background)` is resolved on :root (html), so it
+     freezes to #0c0c14 there and overriding --background lower down won't move
+     it. bg-background utilities read --color-background, so it must be set too. */
+  --background: #09090b;
+  --color-background: #09090b;
 }
 
 .home-scroll {

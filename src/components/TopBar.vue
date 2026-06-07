@@ -2,12 +2,10 @@
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useDark, useToggle, onClickOutside } from '@vueuse/core'
-import { Moon, Sun, Languages, ChevronDown, Menu, X, Github } from 'lucide-vue-next'
+import { Moon, Sun, Languages, ChevronDown, Menu, X, Github, Check } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
-  brandSuffix?: string
-  hideNav?: boolean
   overlay?: boolean
   hideThemeToggle?: boolean
 }>()
@@ -64,13 +62,13 @@ const selectLang = (lang: string) => {
         <RouterLink to="/" class="flex items-center shrink-0 gap-2">
           <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain" />
           <span class="font-bold text-lg tracking-tight" :class="overlay ? 'text-white' : 'text-foreground'">
-            Memoh<span v-if="brandSuffix" class="ml-1.5 font-medium" :class="overlay ? 'text-white/60' : 'text-muted-foreground'">{{ brandSuffix }}</span>
+            Memoh
           </span>
         </RouterLink>
-        <nav v-if="!hideNav" class="hidden md:flex items-center gap-1 sm:gap-2">
+        <nav class="hidden md:flex items-center gap-1 sm:gap-2">
           <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.docs') }}</a>
           <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.supermarket') }}</a>
-          <RouterLink to="/desktop" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass" :active-class="overlay ? 'text-white bg-white/10' : 'text-foreground bg-accent'">{{ $t('nav.desktop') }}</RouterLink>
+          <RouterLink to="/download" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass" :active-class="overlay ? 'text-white bg-white/10' : 'text-foreground bg-accent'">{{ $t('nav.download') }}</RouterLink>
         </nav>
       </div>
 
@@ -95,26 +93,26 @@ const selectLang = (lang: string) => {
           </button>
 
           <Transition
-            enter-active-class="transition duration-100 ease-out"
-            enter-from-class="transform scale-95 opacity-0"
-            enter-to-class="transform scale-100 opacity-100"
-            leave-active-class="transition duration-75 ease-in"
-            leave-from-class="transform scale-100 opacity-100"
-            leave-to-class="transform scale-95 opacity-0"
+            enter-active-class="transition ease-out duration-75"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition ease-in duration-75"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
           >
             <div v-if="isLangOpen"
-                 class="absolute top-full right-0 mt-1.5 w-32 rounded-md border border-border bg-background shadow-lg z-50 overflow-hidden py-1">
+                 class="lang-menu absolute top-full right-0 mt-1.5 w-36 z-50 p-1.5 flex flex-col gap-0.5">
               <button @click="selectLang('en')"
-                      class="flex items-center justify-between w-full px-3 py-2 text-sm hover:bg-accent transition-colors text-left"
-                      :class="{ 'text-foreground bg-accent/50': locale === 'en', 'text-muted-foreground': locale !== 'en' }">
+                      class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-[60ms]"
+                      :class="locale === 'en' ? 'text-foreground' : 'text-muted-foreground'">
                 <span>English</span>
-                <span class="text-[10px] font-bold border border-current rounded px-1 scale-90">EN</span>
+                <Check v-if="locale === 'en'" class="w-4 h-4 shrink-0" />
               </button>
               <button @click="selectLang('zh')"
-                      class="flex items-center justify-between w-full px-3 py-2 text-sm hover:bg-accent transition-colors text-left"
-                      :class="{ 'text-foreground bg-accent/50': locale === 'zh', 'text-muted-foreground': locale !== 'zh' }">
+                      class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-[60ms]"
+                      :class="locale === 'zh' ? 'text-foreground' : 'text-muted-foreground'">
                 <span>中文</span>
-                <span class="text-[10px] font-bold border border-current rounded px-1 scale-90">ZH</span>
+                <Check v-if="locale === 'zh'" class="w-4 h-4 shrink-0" />
               </button>
             </div>
           </Transition>
@@ -128,7 +126,7 @@ const selectLang = (lang: string) => {
           <Moon v-else class="w-4 h-4 shrink-0" />
         </button>
 
-        <button v-if="!hideNav" @click="isMobileMenuOpen = !isMobileMenuOpen"
+        <button @click="isMobileMenuOpen = !isMobileMenuOpen"
                 class="icon-ghost md:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
                 :class="[iconBtnClass, overlay ? 'icon-ghost--overlay' : '']"
                 aria-label="Toggle mobile menu">
@@ -146,10 +144,10 @@ const selectLang = (lang: string) => {
       leave-from-class="transform translate-y-0 opacity-100"
       leave-to-class="transform -translate-y-2 opacity-0"
     >
-      <div v-if="isMobileMenuOpen && !hideNav" class="md:hidden absolute top-[57px] left-0 w-full border-b border-border bg-background/95 backdrop-blur z-40 px-4 py-4 flex flex-col gap-2 shadow-sm">
+      <div v-if="isMobileMenuOpen" class="md:hidden absolute top-[57px] left-0 w-full border-b border-border bg-background/95 backdrop-blur z-40 px-4 py-4 flex flex-col gap-2 shadow-sm">
         <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" @click="isMobileMenuOpen = false">{{ $t('nav.docs') }}</a>
         <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" @click="isMobileMenuOpen = false">{{ $t('nav.supermarket') }}</a>
-        <RouterLink to="/desktop" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" active-class="bg-accent" @click="isMobileMenuOpen = false">{{ $t('nav.desktop') }}</RouterLink>
+        <RouterLink to="/download" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" active-class="bg-accent" @click="isMobileMenuOpen = false">{{ $t('nav.download') }}</RouterLink>
       </div>
     </Transition>
   </header>
@@ -170,16 +168,29 @@ const selectLang = (lang: string) => {
   border-radius: inherit;
   background-color: transparent;
   transition:
-    scale 0.3s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
+    scale 0.255s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
     background-color 0.12s ease-out;
 }
 .icon-ghost:hover::before {
-  background-color: var(--accent);
+  background-color: var(--btn-ghost-hover);
 }
 .icon-ghost--overlay:hover::before {
   background-color: oklch(1 0 0 / 0.12);
 }
+/* ghost/secondary press contract: a restrained 0.974 nudge, not a hard squash */
 .icon-ghost:active::before {
-  scale: 0.86;
+  scale: 0.974;
+}
+
+/* 语言下拉：完全沿用 @memohai/ui Select 的表面（色/描边/阴影/圆角） */
+.lang-menu {
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border-menu);
+  border-radius: 12px;
+  box-shadow: var(--shadow-dropdown);
+}
+.lang-item:hover {
+  background-color: var(--ui-selected);
 }
 </style>

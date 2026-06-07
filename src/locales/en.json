@@ -3,7 +3,8 @@
     "docs": "Docs",
     "github": "GitHub",
     "supermarket": "Supermarket",
-    "desktop": "Desktop"
+    "desktop": "Desktop",
+    "download": "Download"
   },
   "desktop": {
     "seo": {
@@ -16,8 +17,11 @@
     "moreDownloads": "Choose another desktop version",
     "recommended": "Recommended",
     "docs": "Docs",
+    "downloadFor": "Download for {os}",
+    "allDownloads": "All download options",
     "version": {
       "latest": "Latest version",
+      "latestTag": "Latest",
       "loading": "Checking",
       "prerelease": "Pre-release",
       "published": "Released {date}",
@@ -29,6 +33,20 @@
       "win": "Windows (x64)",
       "linuxDebAmd64": "Linux .deb (amd64)",
       "linuxAppImageX86": "Linux AppImage (x86_64)"
+    }
+  },
+  "download": {
+    "seo": {
+      "title": "Download Memoh Desktop - macOS, Windows & Linux",
+      "description": "Pick the Memoh desktop installer for your system. Available for macOS (Apple Silicon & Intel), Windows, and Linux."
+    },
+    "title": "Download Memoh",
+    "subtitle": "Available for macOS, Windows, and Linux.",
+    "forYourDevice": "Recommended for your device",
+    "groups": {
+      "mac": "macOS",
+      "win": "Windows",
+      "linux": "Linux"
     }
   },
   "seo": {
@@ -83,7 +101,7 @@
   },
   "cta_bottom": {
     "title": "Try Memoh",
-    "btn": "Download Desktop",
+    "btn": "Get started",
     "docs": "Read the docs"
   },
   "footer": {

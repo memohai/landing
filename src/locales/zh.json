@@ -3,7 +3,8 @@
     "docs": "文档",
     "github": "GitHub",
     "supermarket": "应用超市",
-    "desktop": "桌面版"
+    "desktop": "桌面版",
+    "download": "下载"
   },
   "desktop": {
     "seo": {
@@ -16,8 +17,11 @@
     "moreDownloads": "选择其他桌面版本",
     "recommended": "推荐",
     "docs": "文档",
+    "downloadFor": "下载 {os} 版",
+    "allDownloads": "查看所有下载选项",
     "version": {
       "latest": "最新版本",
+      "latestTag": "最新",
       "loading": "正在检查",
       "prerelease": "预发布",
       "published": "发布于 {date}",
@@ -29,6 +33,20 @@
       "win": "Windows (x64)",
       "linuxDebAmd64": "Linux .deb (amd64)",
       "linuxAppImageX86": "Linux AppImage (x86_64)"
+    }
+  },
+  "download": {
+    "seo": {
+      "title": "下载 Memoh 桌面版 - macOS、Windows 与 Linux",
+      "description": "选择适合你系统的 Memoh 桌面安装包，支持 macOS（Apple Silicon 与 Intel）、Windows 与 Linux。"
+    },
+    "title": "下载 Memoh",
+    "subtitle": "支持 macOS、Windows 与 Linux",
+    "forYourDevice": "为你的设备推荐",
+    "groups": {
+      "mac": "macOS",
+      "win": "Windows",
+      "linux": "Linux"
     }
   },
   "seo": {
@@ -83,7 +101,7 @@
   },
   "cta_bottom": {
     "title": "试试 Memoh",
-    "btn": "下载桌面版",
+    "btn": "开始使用",
     "docs": "查看文档"
   },
   "footer": {

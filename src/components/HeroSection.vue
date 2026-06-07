@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { ArrowRight, Github } from 'lucide-vue-next'
 import sunsetBg from '../assets/sunset.webp'
 import heroShot from '../assets/hero-shot.webp'
 import { useTa } from '../composables/useTa'
 
 const { th } = useTa()
-const { locale } = useI18n()
 
 // 主标题统一用衬线字体（Source Serif 4 / Noto Serif SC）
 const titleFontClass = computed(() => 'font-serif')
