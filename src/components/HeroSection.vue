@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ArrowRight, Github } from 'lucide-vue-next'
 import sunsetBg from '../assets/sunset.png'
 import heroShot from '../assets/hero-shot.png'
 import { useTa } from '../composables/useTa'
 
 const { th } = useTa()
+const { locale } = useI18n()
+
+// 主标题统一用衬线字体（Source Serif 4 / Noto Serif SC）
+const titleFontClass = computed(() => 'font-serif')
 </script>
 
 <template>
@@ -26,7 +32,7 @@ const { th } = useTa()
 
       <!-- Content: headline + subtitle centered -->
       <div class="relative z-10 w-full max-w-[1100px] mx-auto px-4 md:px-8 flex flex-col items-center text-center pt-40 md:pt-52">
-        <h1 class="font-sans font-medium text-white tracking-tight leading-[1.04] text-5xl md:text-6xl [text-shadow:0_1px_12px_oklch(0_0_0/0.18)] whitespace-pre-line" v-html="th('hero.title')" />
+        <h1 :class="[titleFontClass, 'font-medium text-white leading-[1.08] text-5xl md:text-6xl [text-shadow:0_1px_12px_oklch(0_0_0/0.18)] whitespace-pre-line']" v-html="th('hero.title')" />
 
         <p class="mt-6 max-w-[760px] text-base md:text-lg text-white/92 leading-relaxed drop-shadow-sm whitespace-pre-line">
           <span v-html="th('hero.subtitle')" />

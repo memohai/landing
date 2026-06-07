@@ -3,8 +3,8 @@ import { ref, onMounted, computed, onUnmounted } from 'vue'
 
 // ── 主随机池（7种）──────────────────────────────────────
 const MAIN_CLIPS = [
-  { id: 'a1', src: '/egg-a1.mp4', weight: 10, group: 1 },
-  { id: 'a2', src: '/egg-a2.mp4', weight: 10, group: 1 },
+  { id: 'a1', src: '/egg-a1.mp4', weight: 10, group: 1 },   // old-frame，待重拍
+  { id: 'a2', src: '/egg-a2.mp4', weight: 10, group: 1 },   // old-frame，待重拍
   { id: 'b1', src: '/egg-b1.mp4', weight: 15, group: 2 },
   { id: 'b2', src: '/egg-b2.mp4', weight: 15, group: 2 },
   { id: 'c1', src: '/egg-c1.mp4', weight: 15, group: 1 },
@@ -12,6 +12,13 @@ const MAIN_CLIPS = [
   { id: 'd2', src: '/egg-d2.mp4', weight: 15, group: 2 },
 ]
 const ALL_IDS = new Set(MAIN_CLIPS.map(c => c.id))
+
+// 按源时长分级的播放倍速：让每个视频实际播放节奏接近（~3-4s）
+// 源时长 a1/a2=4 b1/b2=8 c1=4 d1=6 d2=5 e1=4 e3=6 e4=10
+const RATE: Record<string, number> = {
+  a1: 1.5, a2: 1.5, b1: 2.2, b2: 2.2, c1: 1.5,
+  d1: 1.8, d2: 1.6, e1: 1.5, e3: 1.8, e4: 1.8,
+}
 
 // ── 特殊视频 ───────────────────────────────────────────
 const STARTLE_SRC = '/egg-e1.mp4'   // E1: 快速连点炸毛
@@ -28,10 +35,15 @@ let observer: IntersectionObserver | null = null
 // ── state ─────────────────────────────────────────────
 const videoRefs   = ref<Record<string, HTMLVideoElement>>({})
 const activeClip  = ref<string | null>(null)
+const armedClip   = ref<string>('b1')   // 预选的下一个主随机视频，idle 时显示它的第0帧
 const lastClip    = ref<string | null>(null)
 const lastGroup   = ref<number | null>(null)
 const groupStreak = ref(0)
 const busy        = ref(false)
+
+// 当前可见层：播放中显示 activeClip，否则显示预选的 armedClip
+// 这样点击播放的视频 = idle 时显示的视频，第0帧完全对齐，无跳变
+const visibleClip = computed(() => activeClip.value ?? armedClip.value)
 
 // localStorage: 记录已看过的视频 id
 const SEEN_KEY = 'memoh_egg_seen'
@@ -82,14 +94,23 @@ function startClip(key: string, onEnd?: () => void) {
   if (!v) return
   activeClip.value = key
   v.currentTime = 0
-  v.playbackRate = 1.5
+  v.playbackRate = RATE[key] ?? 1.5
   v.play()
   if (onEnd) v.addEventListener('ended', onEnd, { once: true })
 }
 
-function onClipEnded(key: string) {
+function onClipEnded(_key: string) {
   activeClip.value = null
   busy.value = false
+  armNext()   // 预选下一个，并把它停在第0帧作为新的 idle 静帧
+}
+
+// 预选下一个主视频，停在第0帧；idle 时它就是可见层（消除静帧→播放跳变）
+function armNext() {
+  const chosen = pickRandom()
+  armedClip.value = chosen.id
+  const v = videoRefs.value[chosen.id]
+  if (v) { v.pause(); v.currentTime = 0 }
 }
 
 // E1：点猫热区
@@ -120,9 +141,9 @@ function onCatClick() {
       startClip('e4', () => onClipEnded('e4'))
       return
     }
-    // 普通随机
+    // 普通随机：播放已预选好的 armedClip（与 idle 显示的第0帧完全对齐）
     busy.value = true
-    const chosen = pickRandom()
+    const chosen = MAIN_CLIPS.find(c => c.id === armedClip.value) ?? MAIN_CLIPS[0]
     if (chosen.group === lastGroup.value) groupStreak.value++
     else { groupStreak.value = 1; lastGroup.value = chosen.group }
     lastClip.value = chosen.id
@@ -142,8 +163,12 @@ function onBoardClick() {
 function initVideos() {
   if (initialized.value) return
   initialized.value = true
-  const still = videoRefs.value['still']
-  if (still) still.currentTime = 0
+  // 预选首个主随机视频，加载后停在第0帧作为 idle 静帧
+  armNext()
+  requestAnimationFrame(() => {
+    const v = videoRefs.value[armedClip.value]
+    if (v) { v.currentTime = 0 }
+  })
   ;[STARTLE_SRC, BOARD_SRC, GIFT_SRC].forEach(src => {
     const tmp = document.createElement('video')
     tmp.src = src; tmp.preload = 'auto'; tmp.muted = true
@@ -167,16 +192,16 @@ onUnmounted(() => { observer?.disconnect() })
 
 <template>
   <section ref="sectionRef" class="egg select-none">
-    <!-- 静止底层：未初始化时也显示，用 poster 兜底背景色 -->
-    <video
-      :ref="(el) => setRef('still', el)"
-      :src="initialized ? '/egg-a1.mp4' : undefined"
-      :preload="initialized ? 'auto' : 'none'"
+    <!-- 静止底层：用 video model 输出的真实第0帧（egg-poster.png，从 b1 提取），
+         不能用原始输入图 art-egg-1080p.png，否则切到视频会跳帧 -->
+    <img
+      src="/egg-poster.png"
       class="egg-video"
-      muted playsinline aria-hidden="true"
+      aria-hidden="true"
+      alt=""
     />
 
-    <!-- 主随机 clips：懒加载，未初始化不设 src -->
+    <!-- 主随机 clips：懒加载，未初始化不设 src。idle 时显示 armedClip 的第0帧 -->
     <video
       v-for="clip in MAIN_CLIPS"
       :key="clip.id"
@@ -184,7 +209,7 @@ onUnmounted(() => { observer?.disconnect() })
       :preload="initialized ? 'auto' : 'none'"
       :ref="(el) => setRef(clip.id, el)"
       class="egg-video clip-video"
-      :class="{ active: activeClip === clip.id }"
+      :class="{ active: visibleClip === clip.id }"
       muted playsinline aria-hidden="true"
       @ended="onClipEnded(clip.id)"
     />
@@ -195,7 +220,7 @@ onUnmounted(() => { observer?.disconnect() })
       :src="initialized ? STARTLE_SRC : undefined"
       :preload="initialized ? 'auto' : 'none'"
       class="egg-video clip-video"
-      :class="{ active: activeClip === 'e1' }"
+      :class="{ active: visibleClip === 'e1' }"
       muted playsinline aria-hidden="true"
     />
     <video
@@ -203,7 +228,7 @@ onUnmounted(() => { observer?.disconnect() })
       :src="initialized ? BOARD_SRC : undefined"
       :preload="initialized ? 'auto' : 'none'"
       class="egg-video clip-video"
-      :class="{ active: activeClip === 'e3' }"
+      :class="{ active: visibleClip === 'e3' }"
       muted playsinline aria-hidden="true"
     />
     <video
@@ -211,7 +236,7 @@ onUnmounted(() => { observer?.disconnect() })
       :src="initialized ? GIFT_SRC : undefined"
       :preload="initialized ? 'auto' : 'none'"
       class="egg-video clip-video"
-      :class="{ active: activeClip === 'e4' }"
+      :class="{ active: visibleClip === 'e4' }"
       muted playsinline aria-hidden="true"
     />
 
@@ -256,9 +281,9 @@ onUnmounted(() => { observer?.disconnect() })
 
 /* 猫区：右下角，z-index 高于黑板，重叠处优先触发猫 */
 .cat-hotspot {
-  right: 25%;
+  right: 28%;
   bottom: 2%;
-  width: 260px;
+  width: 240px;
   height: 280px;
   z-index: 3;
 }
