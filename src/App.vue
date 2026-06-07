@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
 import { useTa } from './composables/useTa'
+import { useThemePreference } from './composables/useTheme'
 import { useRoute } from 'vue-router'
-import { useDark } from '@vueuse/core'
 import { MapPin, Github, Twitter } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import BackgroundCanvas from './components/BackgroundCanvas.vue'
@@ -13,13 +13,18 @@ const { t } = useI18n()
 const { th } = useTa()
 
 const route = useRoute()
-const isDark = useDark({ initialValue: 'dark' })
+const { isDark } = useThemePreference()
 
 const isDownloadRoute = computed(() => route.path.startsWith('/download'))
 const isHomeRoute = computed(() => route.path === '/')
 
+// Single owner of the <html> `dark` class. The landing page always *renders*
+// dark, but must never overwrite the user's saved preference — so we force the
+// class here based on route without writing to storage. Every other route
+// follows the persisted choice.
 watchEffect(() => {
-  if (isHomeRoute.value) isDark.value = true
+  const dark = isHomeRoute.value ? true : isDark.value
+  document.documentElement.classList.toggle('dark', dark)
 })
 
 const isMemohNet = computed(() => {

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { useDark, useToggle, onClickOutside } from '@vueuse/core'
+import { onClickOutside } from '@vueuse/core'
 import { Moon, Sun, Languages, ChevronDown, Menu, X, Github, Check } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
+import { useThemePreference } from '../composables/useTheme'
 
 const props = defineProps<{
   overlay?: boolean
@@ -22,8 +23,7 @@ const iconBtnClass = computed(() =>
     : 'text-muted-foreground hover:text-foreground',
 )
 
-const isDark = useDark({ initialValue: 'dark' })
-const toggleDark = useToggle(isDark)
+const { isDark, toggle: toggleDark } = useThemePreference()
 
 const { locale } = useI18n()
 
