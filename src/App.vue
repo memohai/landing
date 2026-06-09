@@ -17,8 +17,9 @@ const { isDark } = useThemePreference()
 
 const isDownloadRoute = computed(() => route.path.startsWith('/download'))
 const isBlogsRoute = computed(() => route.path.startsWith('/blogs'))
+const isPricingRoute = computed(() => route.path.startsWith('/pricing'))
 const isHomeRoute = computed(() => route.path === '/')
-const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value)
+const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isPricingRoute.value)
 
 // Single owner of the <html> `dark` class. The landing page always *renders*
 // dark, but must never overwrite the user's saved preference — so we force the
@@ -91,6 +92,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.product') }}</span>
               <router-link to="/download" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.download') }}</router-link>
+              <router-link to="/pricing" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.pricing') }}</router-link>
               <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.supermarket') }}</a>
             </div>
             <div class="flex flex-col gap-3">
