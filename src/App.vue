@@ -16,7 +16,9 @@ const route = useRoute()
 const { isDark } = useThemePreference()
 
 const isDownloadRoute = computed(() => route.path.startsWith('/download'))
+const isBlogsRoute = computed(() => route.path.startsWith('/blogs'))
 const isHomeRoute = computed(() => route.path === '/')
+const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value)
 
 // Single owner of the <html> `dark` class. The landing page always *renders*
 // dark, but must never overwrite the user's saved preference — so we force the
@@ -44,8 +46,8 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 </script>
 
 <template>
-  <div class="min-h-screen font-sans overflow-x-hidden" :class="{ 'home-shell': isHomeRoute, 'download-shell': isDownloadRoute }">
-    <BackgroundCanvas v-if="!isHomeRoute && !isDownloadRoute" />
+  <div class="min-h-screen font-sans overflow-x-hidden" :class="{ 'home-shell': isHomeRoute, 'download-shell': isPlainContentRoute }">
+    <BackgroundCanvas v-if="!isHomeRoute && !isPlainContentRoute" />
 
     <div
       class="relative z-10 w-full"
@@ -55,7 +57,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
         class="w-full flex flex-col items-center"
         :class="{ 'home-gradient home-content': isHomeRoute }"
       >
-        <TopBar :overlay="isHomeRoute" :hide-theme-toggle="isHomeRoute" />
+        <TopBar :overlay="isHomeRoute" :hide-theme-toggle="isHomeRoute" :light-social-icons="isPlainContentRoute && isDark" />
 
         <RouterView />
 
@@ -94,6 +96,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.resources') }}</span>
               <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.docs') }}</a>
+              <router-link to="/blogs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.blogs') }}</router-link>
               <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.github') }}</a>
             </div>
             <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
