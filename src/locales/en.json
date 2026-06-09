@@ -58,9 +58,9 @@
   "hero": {
     "title": "someone who stays",
     "subtitle": "Memoh is the multi-agent platform — each one lives in a computer of its own\nright here, waiting for you",
-    "ctaPrimary": "Get started",
+    "ctaPrimary": "Join waitlist",
     "ctaSecondary": "GitHub",
-    "cta": "Get Started",
+    "cta": "Join waitlist",
     "desktop": "Desktop App",
     "desktopHint": "Choose macOS / Windows / Linux",
     "skip": "Skip ⏭"
@@ -103,8 +103,43 @@
   },
   "cta_bottom": {
     "title": "Try Memoh",
-    "btn": "Get started",
+    "btn": "Join waitlist",
     "docs": "Read the docs"
+  },
+  "waitlist": {
+    "seo": {
+      "title": "Join the Memoh waitlist",
+      "description": "Join the Memoh waitlist for early access to cloud agent workspaces."
+    },
+    "kicker": "Early access",
+    "title": "Join the Memoh waitlist.",
+    "subtitle": "Leave your email and we will reach out when the hosted Memoh experience is ready for more users.",
+    "notes": {
+      "one": {
+        "title": "Cloud workspaces",
+        "body": "Get updates as hosted agent computers open up."
+      },
+      "two": {
+        "title": "Early product notes",
+        "body": "Hear what is changing before the public rollout."
+      },
+      "three": {
+        "title": "No noisy mail",
+        "body": "A short list for access, not a newsletter blast."
+      }
+    },
+    "form": {
+      "title": "Request access",
+      "subtitle": "One email is enough.",
+      "email": "Email",
+      "placeholder": "you@example.com",
+      "submit": "Join waitlist",
+      "submitting": "Joining...",
+      "joined": "Joined",
+      "success": "You are on the waitlist. We will be in touch.",
+      "error": "Unable to join the waitlist. Please try again.",
+      "disclaimer": "By joining, you agree that Memoh may contact you about early access."
+    }
   },
   "footer": {
     "copyright": "© 2026 MEMOH AI PTE. LTD. All rights reserved.",
@@ -112,7 +147,7 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "tagline": "The multi-agent platform\nwhere every agent has its own computer, always on",
-    "getStarted": "Get started",
+    "getStarted": "Join waitlist",
     "product": "Product",
     "resources": "Resources",
     "legal": "Legal"

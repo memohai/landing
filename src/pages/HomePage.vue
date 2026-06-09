@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { ArrowRight, ImageIcon } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useHead, useSeoMeta } from '@unhead/vue'
@@ -200,13 +201,13 @@ const moreLogos = [
         {{ $t('cta_bottom.title') }}
       </h2>
       <div class="flex flex-col sm:flex-row items-center gap-4">
-        <a
-          href="#"
+        <RouterLink
+          to="/waitlist"
           class="cta-btn-primary inline-flex items-center justify-center gap-2 h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
         >
           {{ $t('cta_bottom.btn') }}
           <ArrowRight :size="16" />
-        </a>
+        </RouterLink>
         <a
           :href="docsUrl"
           target="_blank"

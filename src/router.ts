@@ -3,11 +3,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 const HomePage = () => import('./pages/HomePage.vue')
 const DownloadPage = () => import('./pages/DownloadPage.vue')
 const BlogsPage = () => import('./pages/BlogsPage.vue')
+const WaitlistPage = () => import('./pages/WaitlistPage.vue')
 
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', name: 'home', component: HomePage },
+    { path: '/waitlist', name: 'waitlist', component: WaitlistPage },
     { path: '/download', name: 'download', component: DownloadPage },
     { path: '/blogs', name: 'blogs', component: BlogsPage },
     { path: '/blogs/:slug', name: 'blog-post', component: BlogsPage },

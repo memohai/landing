@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { ArrowRight, Github } from 'lucide-vue-next'
 import sunsetBg from '../assets/sunset.webp'
 import heroShot from '../assets/hero-shot.webp'
@@ -38,13 +39,13 @@ const titleFontClass = computed(() => 'font-serif')
 
         <!-- CTAs — page-local treatment adapted from the @memohai/ui button contract -->
         <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href="#"
+          <RouterLink
+            to="/waitlist"
             class="hero-btn hero-btn-primary inline-flex h-[52px] items-center justify-center gap-2 rounded-full px-7 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           >
             {{ $t('hero.ctaPrimary') }}
             <ArrowRight :size="18" />
-          </a>
+          </RouterLink>
           <a
             href="https://github.com/memohai/Memoh"
             target="_blank"

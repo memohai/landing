@@ -58,7 +58,7 @@
   "hero": {
     "title": "陪着你的%TA%",
     "subtitle": "Memoh 是多 Agent 平台，每个%TA%都住在自己的电脑里\n在这里一直等着你",
-    "ctaPrimary": "开始使用",
+    "ctaPrimary": "Join waitlist",
     "ctaSecondary": "GitHub",
     "cta": "开始",
     "desktop": "桌面版",
@@ -103,8 +103,43 @@
   },
   "cta_bottom": {
     "title": "试试 Memoh",
-    "btn": "开始使用",
+    "btn": "Join waitlist",
     "docs": "查看文档"
+  },
+  "waitlist": {
+    "seo": {
+      "title": "加入 Memoh Waitlist",
+      "description": "加入 Memoh waitlist，获取云端 Agent 工作区的早期访问资格。"
+    },
+    "kicker": "Early access",
+    "title": "加入 Memoh waitlist。",
+    "subtitle": "留下邮箱，等 hosted Memoh 开放更多名额时我们会联系你。",
+    "notes": {
+      "one": {
+        "title": "云端工作区",
+        "body": "第一时间获取 hosted Agent computer 的开放进展。"
+      },
+      "two": {
+        "title": "早期产品更新",
+        "body": "在正式公开前了解重要变化。"
+      },
+      "three": {
+        "title": "不打扰",
+        "body": "这是访问名单，不是高频 newsletter。"
+      }
+    },
+    "form": {
+      "title": "申请访问",
+      "subtitle": "一个邮箱就够了。",
+      "email": "邮箱",
+      "placeholder": "you@example.com",
+      "submit": "Join waitlist",
+      "submitting": "提交中...",
+      "joined": "已加入",
+      "success": "你已经加入 waitlist，我们会后续联系你。",
+      "error": "暂时无法加入 waitlist，请稍后再试。",
+      "disclaimer": "加入后，Memoh 可能通过邮件联系你以提供早期访问相关信息。"
+    }
   },
   "footer": {
     "copyright": "© 2026 MEMOH AI PTE. LTD. All rights reserved.",
@@ -112,7 +147,7 @@
     "privacy": "隐私政策",
     "terms": "服务条款",
     "tagline": "多 Agent 平台\n每个%TA%都有自己的电脑，一直在",
-    "getStarted": "开始使用",
+    "getStarted": "Join waitlist",
     "product": "产品",
     "resources": "资源",
     "legal": "法律"
