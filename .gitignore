@@ -23,6 +23,24 @@ dist-ssr
 *.sln
 *.sw?
 
+# Easter egg — 生成源 & 临时文件（仅本地，最终成品在 public/egg/ 入库）
+public/gacha/
+public/gacha2/
+public/final-1080p/
+public/_preview/
+public/egg-still.jpg
+public/egg-still.png
+public/egg-*.mp4
+public/egg-poster.png
+public/egg-cat.mp4
+public/test-seedance.mp4
+public/art-egg.png
+public/art-egg-1080p.png
+public/art-egg-480p.png
+scripts/
+public/egg/poster.png
+# 注意：public/egg/（最终压缩视频 + poster.webp）不忽略，随仓库分发
+
 # AI Configuration & Design Specs
 .gemini/
 .claude/

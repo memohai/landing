@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
-import { useDark, useEventListener } from '@vueuse/core'
+import { useEventListener } from '@vueuse/core'
+import { useThemePreference } from '../composables/useTheme'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
-const isDark = useDark({ initialValue: 'dark' })
+const { isDark } = useThemePreference()
 
 // Physics parameters
 const MOUSE_LERP = 0.08

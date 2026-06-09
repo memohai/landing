@@ -4,6 +4,7 @@
 
 @theme {
   --font-sans: "Inter", sans-serif;
+  --font-serif: "Source Serif 4", "Noto Serif SC", serif;
   --font-mono: "Fira Code", monospace;
   --shadow-nav: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   --shadow-terminal: 0 20px 40px 0 rgba(0, 0, 0, 0.15);
@@ -36,9 +37,18 @@
     --destructive: #ef4444;
     --destructive-foreground: #ffffff;
     --ring: #09090b;
+
+    /* menu / select 表面 token（搬自 @memohai/ui，用于语言下拉与图标按钮） */
+    --popover: oklch(0.995 0.001 286);
+    --popover-foreground: oklch(0.27 0.004 95);
+    --border-menu: oklch(0 0 0 / 0.13);
+    --shadow-dropdown: 0 1px 2px 0 oklch(0 0 0 / 0.04), 0 6px 18px -6px oklch(0 0 0 / 0.08);
+    --ui-hover: oklch(0.978 0 0);
+    --ui-selected: oklch(0.962 0 0);
+    --btn-ghost-hover: oklch(0.948 0 0);
   }
   .dark {
-    --background: #09090b;
+    --background: #0c0c14;
     --foreground: #fafafa;
     --muted: #27272a;
     --muted-foreground: #a1a1aa;
@@ -50,6 +60,14 @@
     --destructive: #ef4444;
     --destructive-foreground: #fafafa;
     --ring: #d4d4d8;
+
+    --popover: oklch(0.21 0 0);
+    --popover-foreground: oklch(0.90 0 0);
+    --border-menu: oklch(1 0 0 / 0.14);
+    --shadow-dropdown: 0 1px 2px 0 oklch(0 0 0 / 0.04), 0 6px 18px -6px oklch(0 0 0 / 0.35);
+    --ui-hover: oklch(0.26 0 0);
+    --ui-selected: oklch(0.29 0 0);
+    --btn-ghost-hover: oklch(0.27 0 0);
   }
 }
 
@@ -63,6 +81,66 @@
   body {
     @apply bg-background text-foreground;
   }
+  ::selection {
+    background-color: rgba(120, 126, 140, 0.32);
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* Shared pill buttons — landing button language. Foreground-fill primary +
+     bordered secondary. Press/hover contract ported from @memohai/ui: the bg
+     lives on ::before so the label never scales. Neutral, works on plain bg. */
+  .btn-pill {
+    position: relative;
+    isolation: isolate;
+    border-radius: 9999px;
+  }
+  .btn-pill-primary {
+    color: var(--background);
+  }
+  .btn-pill-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--foreground);
+    transition:
+      scale 0.3s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
+      background-color 0.15s ease-out;
+  }
+  .btn-pill-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transition: opacity 0.18s ease-out;
+  }
+  .btn-pill-primary:hover::before { scale: 1.01 1.04; }
+  .btn-pill-primary:hover::after { opacity: 1; }
+  .btn-pill-primary:active::before { scale: 0.974; }
+
+  .btn-pill-secondary {
+    color: var(--foreground);
+  }
+  .btn-pill-secondary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    border: 1px solid var(--border);
+    background-color: transparent;
+    transition:
+      scale 0.3s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
+      background-color 0.18s ease-out;
+  }
+  .btn-pill-secondary:hover::before { background-color: var(--accent); }
+  .btn-pill-secondary:active::before { scale: 0.974; }
 }
 
 @layer utilities {
