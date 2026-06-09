@@ -2,9 +2,10 @@
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { onClickOutside } from '@vueuse/core'
-import { Moon, Sun, Languages, ChevronDown, Menu, X, Github, Check } from 'lucide-vue-next'
+import { Moon, Sun, Languages, ChevronDown, Check } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useThemePreference } from '../composables/useTheme'
+import GitHubStarsLink from './GitHubStarsLink.vue'
 
 const props = defineProps<{
   overlay?: boolean
@@ -26,6 +27,10 @@ const iconBtnClass = computed(() =>
 const { isDark, toggle: toggleDark } = useThemePreference()
 
 const { locale } = useI18n()
+const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
+const pricingUrl = 'https://memoh.ai/pricing'
+const blogsUrl = 'https://docs.memoh.ai/blogs/'
+const telegramIconSrc = computed(() => props.overlay ? '/brands/telegram-white.svg' : '/brands/telegram.svg')
 
 const isLangOpen = ref(false)
 const langMenuRef = ref<HTMLElement | null>(null)
@@ -33,8 +38,6 @@ const langMenuRef = ref<HTMLElement | null>(null)
 onClickOutside(langMenuRef, () => {
   isLangOpen.value = false
 })
-
-const isMobileMenuOpen = ref(false)
 
 const toggleLangMenu = () => {
   isLangOpen.value = !isLangOpen.value
@@ -66,20 +69,21 @@ const selectLang = (lang: string) => {
           </span>
         </RouterLink>
         <nav class="hidden md:flex items-center gap-1 sm:gap-2">
-          <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.docs') }}</a>
-          <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.supermarket') }}</a>
-          <RouterLink to="/download" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass" :active-class="overlay ? 'text-white bg-white/10' : 'text-foreground bg-accent'">{{ $t('nav.download') }}</RouterLink>
+          <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.docs') }}</a>
+          <a :href="pricingUrl" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.pricing') }}</a>
+          <a :href="blogsUrl" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.blogs') }}</a>
         </nav>
       </div>
 
       <div class="flex items-center ml-2 sm:ml-4 shrink-0 gap-2">
-        <a href="https://github.com/memohai/Memoh"
+        <GitHubStarsLink :overlay="overlay" />
+        <a href="https://t.me/memohai"
            target="_blank"
            rel="noopener noreferrer"
-           aria-label="GitHub"
+           aria-label="Telegram"
            class="icon-ghost flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
            :class="[iconBtnClass, overlay ? 'icon-ghost--overlay' : '']">
-          <Github class="w-4 h-4 shrink-0" />
+          <img :src="telegramIconSrc" alt="" class="w-4 h-4 shrink-0" />
         </a>
 
         <div class="relative flex items-center" ref="langMenuRef">
@@ -126,30 +130,8 @@ const selectLang = (lang: string) => {
           <Moon v-else class="w-4 h-4 shrink-0" />
         </button>
 
-        <button @click="isMobileMenuOpen = !isMobileMenuOpen"
-                class="icon-ghost md:hidden flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
-                :class="[iconBtnClass, overlay ? 'icon-ghost--overlay' : '']"
-                aria-label="Toggle mobile menu">
-          <Menu v-if="!isMobileMenuOpen" class="w-4 h-4 shrink-0" />
-          <X v-else class="w-4 h-4 shrink-0" />
-        </button>
       </div>
     </div>
-
-    <Transition
-      enter-active-class="transition duration-200 ease-out"
-      enter-from-class="transform -translate-y-2 opacity-0"
-      enter-to-class="transform translate-y-0 opacity-100"
-      leave-active-class="transition duration-150 ease-in"
-      leave-from-class="transform translate-y-0 opacity-100"
-      leave-to-class="transform -translate-y-2 opacity-0"
-    >
-      <div v-if="isMobileMenuOpen" class="md:hidden absolute top-[57px] left-0 w-full border-b border-border bg-background/95 backdrop-blur z-40 px-4 py-4 flex flex-col gap-2 shadow-sm">
-        <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" @click="isMobileMenuOpen = false">{{ $t('nav.docs') }}</a>
-        <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" @click="isMobileMenuOpen = false">{{ $t('nav.supermarket') }}</a>
-        <RouterLink to="/download" class="font-medium text-sm text-foreground hover:bg-accent rounded-md px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" active-class="bg-accent" @click="isMobileMenuOpen = false">{{ $t('nav.download') }}</RouterLink>
-      </div>
-    </Transition>
   </header>
 </template>
 

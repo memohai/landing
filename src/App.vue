@@ -9,7 +9,7 @@ import BackgroundCanvas from './components/BackgroundCanvas.vue'
 import TopBar from './components/TopBar.vue'
 import EasterEgg from './components/EasterEgg.vue'
 
-const { t } = useI18n()
+const { locale, t } = useI18n()
 const { th } = useTa()
 
 const route = useRoute()
@@ -37,6 +37,7 @@ const isMemohNet = computed(() => {
 
 const memohNetAddress = 'Cloud Technology Building, No. 50 Liuxin 1st Road, Nanshan District, Shenzhen'
 const footerAddress = computed(() => (isMemohNet.value ? memohNetAddress : t('footer.address')))
+const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 const miitBeianUrl = 'https://beian.miit.gov.cn/'
 const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 
@@ -72,6 +73,10 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
                 <Github class="w-4 h-4" />
               </a>
+              <a href="https://t.me/memohai" target="_blank" rel="noopener noreferrer" aria-label="Telegram"
+                 class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
+                <img src="/brands/telegram-white.svg" alt="" class="w-4 h-4 opacity-70 transition-opacity hover:opacity-100" />
+              </a>
               <a href="https://x.com/memohai" target="_blank" rel="noopener noreferrer" aria-label="X"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
                 <Twitter class="w-4 h-4" />
@@ -88,7 +93,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
             </div>
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.resources') }}</span>
-              <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.docs') }}</a>
+              <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.docs') }}</a>
               <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.github') }}</a>
             </div>
             <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">

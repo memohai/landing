@@ -10,6 +10,7 @@ const { locale, t } = useI18n()
 const { th } = useTa()
 const siteUrl = 'https://memoh.ai/'
 const socialImage = 'https://memoh.ai/logo.png'
+const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 
 useSeoMeta({
   title: () => t('seo.title'),
@@ -207,7 +208,7 @@ const moreLogos = [
           <ArrowRight :size="16" />
         </a>
         <a
-          href="https://docs.memoh.ai"
+          :href="docsUrl"
           target="_blank"
           rel="noopener noreferrer"
           class="cta-btn-secondary inline-flex items-center justify-center h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
