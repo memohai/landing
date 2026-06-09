@@ -20,7 +20,7 @@ const linkClass = computed(() =>
 )
 
 const iconBtnClass = computed(() =>
-  props.overlay
+  props.overlay || props.lightSocialIcons
     ? 'text-white/85 hover:text-white'
     : 'text-muted-foreground hover:text-foreground',
 )
@@ -30,7 +30,6 @@ const { isDark, toggle: toggleDark } = useThemePreference()
 const { locale } = useI18n()
 const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 const pricingUrl = 'https://memoh.ai/pricing'
-const telegramIconSrc = computed(() => props.overlay || props.lightSocialIcons ? '/brands/telegram-white.svg' : '/brands/telegram.svg')
 
 const isLangOpen = ref(false)
 const langMenuRef = ref<HTMLElement | null>(null)
@@ -83,7 +82,7 @@ const selectLang = (lang: string) => {
            aria-label="Telegram"
            class="icon-ghost flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
            :class="[iconBtnClass, overlay ? 'icon-ghost--overlay' : '']">
-          <img :src="telegramIconSrc" alt="" class="w-4 h-4 shrink-0" />
+          <span aria-hidden="true" class="telegram-icon h-4 w-4 shrink-0"></span>
         </a>
 
         <div class="relative flex items-center" ref="langMenuRef">
@@ -162,6 +161,12 @@ const selectLang = (lang: string) => {
 /* ghost/secondary press contract: a restrained 0.974 nudge, not a hard squash */
 .icon-ghost:active::before {
   scale: 0.974;
+}
+
+.telegram-icon {
+  background-color: currentColor;
+  mask: url('/brands/telegram.svg') center / contain no-repeat;
+  -webkit-mask: url('/brands/telegram.svg') center / contain no-repeat;
 }
 
 /* 语言下拉：完全沿用 @memohai/ui Select 的表面（色/描边/阴影/圆角） */

@@ -1,5 +1,4 @@
-import { computed } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { computed, ref } from 'vue'
 
 export type ColorScheme = 'dark' | 'light'
 
@@ -11,13 +10,26 @@ export type ColorScheme = 'dark' | 'light'
  * without ever overwriting this stored preference. Reuses the existing
  * `vueuse-color-scheme` key so previously saved choices carry over.
  */
-const stored = useStorage<ColorScheme>('vueuse-color-scheme', 'dark')
+const storageKey = 'vueuse-color-scheme'
+
+const getInitialColorScheme = (): ColorScheme => {
+  if (typeof window === 'undefined') return 'dark'
+  return window.localStorage.getItem(storageKey) === 'light' ? 'light' : 'dark'
+}
+
+const stored = ref<ColorScheme>(getInitialColorScheme())
+
+const persistColorScheme = (value: ColorScheme) => {
+  if (typeof window === 'undefined') return
+  window.localStorage.setItem(storageKey, value)
+}
 
 export function useThemePreference() {
   const isDark = computed<boolean>({
     get: () => stored.value !== 'light',
     set: (value) => {
       stored.value = value ? 'dark' : 'light'
+      persistColorScheme(stored.value)
     },
   })
 
