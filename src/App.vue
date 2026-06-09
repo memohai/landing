@@ -77,7 +77,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               </a>
               <a href="https://t.me/memohai" target="_blank" rel="noopener noreferrer" aria-label="Telegram"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
-                <img src="/brands/telegram-white.svg" alt="" class="w-4 h-4 opacity-70 transition-opacity hover:opacity-100" />
+                <span aria-hidden="true" class="telegram-icon h-4 w-4"></span>
               </a>
               <a href="https://x.com/memohai" target="_blank" rel="noopener noreferrer" aria-label="X"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
@@ -180,6 +180,12 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 
 .home-gradient {
   background: linear-gradient(to bottom, #0c0c14 0%, #0c0c14 48%, #09090b 100%);
+}
+
+.telegram-icon {
+  background-color: currentColor;
+  mask: url('/brands/telegram.svg') center / contain no-repeat;
+  -webkit-mask: url('/brands/telegram.svg') center / contain no-repeat;
 }
 
 </style>
