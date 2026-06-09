@@ -18,6 +18,18 @@ const pages = {
     socialDescription: 'Download Memoh Desktop for macOS, Windows, and Linux.',
     url: 'https://memoh.ai/desktop',
   },
+  waitlist: {
+    title: 'Join the Memoh waitlist',
+    description: 'Join the Memoh waitlist for early access to cloud agent workspaces.',
+    socialDescription: 'Join the Memoh waitlist for early access to cloud agent workspaces.',
+    url: 'https://memoh.ai/waitlist',
+  },
+  blogs: {
+    title: 'Memoh Blog',
+    description: 'Field notes, architecture writeups, and product updates from the Memoh team.',
+    socialDescription: 'Field notes, architecture writeups, and product updates from the Memoh team.',
+    url: 'https://memoh.ai/blogs',
+  },
 }
 
 const escapeHtml = (value) => {
@@ -61,7 +73,7 @@ const indexHtml = await readFile(indexPath, 'utf8')
 await writeFile(indexPath, withMeta(indexHtml, pages.home))
 await writeFile(resolve(distDir, '404.html'), withMeta(indexHtml, pages.home))
 
-for (const route of ['desktop']) {
+for (const route of ['desktop', 'waitlist', 'blogs']) {
   const routeDir = resolve(distDir, route)
   await mkdir(routeDir, { recursive: true })
   await writeFile(resolve(routeDir, 'index.html'), withMeta(indexHtml, pages[route]))

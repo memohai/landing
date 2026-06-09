@@ -132,7 +132,7 @@
       "title": "Request access",
       "subtitle": "One email is enough.",
       "email": "Email",
-      "placeholder": "you@example.com",
+      "placeholder": "Email address",
       "submit": "Join waitlist",
       "submitting": "Joining...",
       "joined": "Joined",

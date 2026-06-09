@@ -132,7 +132,7 @@
       "title": "申请访问",
       "subtitle": "一个邮箱就够了。",
       "email": "邮箱",
-      "placeholder": "you@example.com",
+      "placeholder": "邮箱地址",
       "submit": "Join waitlist",
       "submitting": "提交中...",
       "joined": "已加入",
