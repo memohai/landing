@@ -22,6 +22,12 @@ curl -sL https://memoh.sh | bash
 
 ## Links
 - Website: https://memoh.ai
+- Blog: https://memoh.ai/blogs
 - Documentation: https://docs.memoh.ai
 - GitHub: https://github.com/memohai/Memoh
 - Plugin Market: https://github.com/memohai/supermarket
+
+## Blog Posts
+- Desktop workspace display: https://memoh.ai/blogs/2026-05-15
+- Discuss mode for proactive group chat agents: https://memoh.ai/blogs/2026-05-02
+- Introduction to Memoh: https://memoh.ai/blogs/2026-02-16
